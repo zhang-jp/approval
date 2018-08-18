@@ -15,7 +15,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<infrastructure-boot.version>1.0.1.3_alpha</infrastructure-boot.version>
+		<infrastructure-boot.version>1.0.1.5_alpha</infrastructure-boot.version>
 		<infrastructure-auth.version>2.0.1_alpha</infrastructure-auth.version>
 		<commons-lang3.version>3.5</commons-lang3.version>
 		<druid-spring-boot.version>1.1.6</druid-spring-boot.version>
