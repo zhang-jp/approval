@@ -11,17 +11,13 @@ import com.tenkent.infrastructure.log.LoggerManager;
  * AES加解密
  * 
  * @author  zhangjiaping
- * @version  [版本号, 2017年4月14日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @version  [版本号, 2018年9月19日]
  */
-public class AesUtil
-{
+public class AesUtil {
     /**
      * 私有构造方法<默认构造函数>
      */
-    private AesUtil()
-    {
+    private AesUtil() {
     }
     
     /**
@@ -38,20 +34,16 @@ public class AesUtil
      * @throws Exception
      * @see [类、类#方法、类#成员]
      */
-    public static String Encrypt(String sSrc, String iv, String sKey)
-    {
-        try
-        {
+    public static String Encrypt(String sSrc, String iv, String sKey) {
+        try {
             
             //判断Key是否为空   
-            if (sKey == null)
-            {
+            if (sKey == null) {
                 return null;
             }
             
             // 判断Key是否为16位    
-            if (sKey.length() != 16)
-            {
+            if (sKey.length() != 16) {
                 return null;
             }
             byte[] raw = sKey.getBytes();
@@ -62,8 +54,7 @@ public class AesUtil
             
             return Base64.getEncoder().encodeToString(encrypted);//此处使用BAES64做转码功能，同时能起到2次加密的作用。    
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(AesUtil.class, e, "AES加密失败:{}", sSrc);
             return null;
         }
@@ -78,18 +69,14 @@ public class AesUtil
      * @throws Exception
      * @see [类、类#方法、类#成员]
      */
-    public static String Decrypt(String sSrc, String iv, String sKey)
-    {
-        try
-        {
+    public static String Decrypt(String sSrc, String iv, String sKey) {
+        try {
             // 判断Key是否正确    
-            if (sKey == null)
-            {
+            if (sKey == null) {
                 return null;
             }
             // 判断Key是否为16位    
-            if (sKey.length() != 16)
-            {
+            if (sKey.length() != 16) {
                 return null;
             }
             byte[] raw = sKey.getBytes("utf8");
@@ -99,20 +86,17 @@ public class AesUtil
             //先用bAES64解密    
             byte[] encrypted1 = Base64.getDecoder().decode(sSrc);
             
-            try
-            {
+            try {
                 byte[] original = cipher.doFinal(encrypted1);
                 String originalString = new String(original);
                 return originalString;
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 LoggerManager.error(AesUtil.class, e, "AES解密失败:{}", sSrc);
                 return null;
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             LoggerManager.error(AesUtil.class, ex, "bAES64解密失败:{}", sSrc);
             return null;
         }

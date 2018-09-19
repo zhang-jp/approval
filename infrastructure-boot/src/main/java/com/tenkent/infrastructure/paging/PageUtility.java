@@ -13,13 +13,12 @@ import com.tenkent.infrastructure.utility.MapUtility;
 
 /**
  * 分页page帮助类
- * @author  qinzhengliang
- * @version  [版本号, 2017年9月4日]
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class PageUtility
-{
-    private PageUtility()
-    {
+public class PageUtility {
+    private PageUtility() {
     }
     
     /**
@@ -28,8 +27,7 @@ public class PageUtility
      * @param clazz
      * @return
      */
-    public static <T extends CustomInfo> PageCondition<T> buildCondition(Map<String, Object> map, Class<T> clazz)
-    {
+    public static <T extends CustomInfo> PageCondition<T> buildCondition(Map<String, Object> map, Class<T> clazz) {
         // 分页页码设置
         int pageNum = MapUtility.getMapInt(map, GlobalConstant.PAGE_NUM, 1);
         int pageSize = MapUtility.getMapInt(map, GlobalConstant.PAGE_SIZE, 10);
@@ -40,12 +38,10 @@ public class PageUtility
         
         // 业务定制参数
         T condition;
-        try
-        {
+        try {
             condition = clazz.newInstance();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException(e, "构建分页参数查询条件异常");
         }
         
@@ -57,14 +53,11 @@ public class PageUtility
      * 分页查询，包括排序
      * @param condition
      */
-    public static void startPage(PageCondition<?> condition)
-    {
-        if (StringUtils.isEmpty(condition.getOrderBy()))
-        {
+    public static void startPage(PageCondition<?> condition) {
+        if (StringUtils.isEmpty(condition.getOrderBy())) {
             PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
         }
-        else
-        {
+        else {
             PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), condition.getOrderBy());
         }
     }
@@ -73,8 +66,7 @@ public class PageUtility
      * 分页查询
      * @param map
      */
-    public static void startPage(Map<String, Object> map)
-    {
+    public static void startPage(Map<String, Object> map) {
         int pageNum = MapUtility.getMapInt(map, GlobalConstant.PAGE_NUM, 1);
         int pageSize = MapUtility.getMapInt(map, GlobalConstant.PAGE_SIZE, 10);
         PageHelper.startPage(pageNum, pageSize);
@@ -86,15 +78,13 @@ public class PageUtility
      * @param map 查询条件
      * @param orderBy 排序
      */
-    public static void startPage(Map<String, Object> map, String orderBy)
-    {
+    public static void startPage(Map<String, Object> map, String orderBy) {
         int pageNum = MapUtility.getMapInt(map, GlobalConstant.PAGE_NUM, 1);
         int pageSize = MapUtility.getMapInt(map, GlobalConstant.PAGE_SIZE, 10);
         PageHelper.startPage(pageNum, pageSize, orderBy);
     }
     
-    public static void startPage(int pageNum, int pageSize)
-    {
+    public static void startPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
     }
     
@@ -105,8 +95,7 @@ public class PageUtility
      * @param pageSize 每页记录数
      * @param orderBy 排序
      */
-    public static void startPage(int pageNum, int pageSize, String orderBy)
-    {
+    public static void startPage(int pageNum, int pageSize, String orderBy) {
         PageHelper.startPage(pageNum, pageSize, orderBy);
     }
     
@@ -115,8 +104,7 @@ public class PageUtility
      * 
      * @param orderBy 排序条件
      */
-    public static void orderBy(String orderBy)
-    {
+    public static void orderBy(String orderBy) {
         PageHelper.orderBy(orderBy);
     }
 }

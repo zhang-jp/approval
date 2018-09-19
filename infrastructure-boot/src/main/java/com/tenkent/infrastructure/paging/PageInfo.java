@@ -7,11 +7,11 @@ import com.github.pagehelper.Page;
 
 /**
  * 分页组件
- * @author  qinzhengliang
- * @version  [版本号, 2017年5月16日]
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class PageInfo<E>
-{
+public class PageInfo<E> {
     //当前页
     private int pageNum;
     
@@ -69,15 +69,13 @@ public class PageInfo<E>
     /**
      * 构造行数
      */
-    public PageInfo()
-    {
+    public PageInfo() {
     }
     
     /**
      * 构造行数
      */
-    public PageInfo(Object o)
-    {
+    public PageInfo(Object o) {
         init(o);
     }
     
@@ -85,10 +83,8 @@ public class PageInfo<E>
      * 包装Page对象
      * @param o
      */
-    public void init(Object o)
-    {
-        if (o instanceof Page)
-        {
+    public void init(Object o) {
+        if (o instanceof Page) {
             Page<?> page = (Page<?>)o;
             this.pageNum = page.getPageNum();
             this.pageSize = page.getPageSize();
@@ -119,46 +115,36 @@ public class PageInfo<E>
     /**
      * 计算导航页
      */
-    private void calcNavigatepageNums()
-    {
+    private void calcNavigatepageNums() {
         //当总页数小于或等于导航页码数时
-        if (pages <= navigatePages)
-        {
+        if (pages <= navigatePages) {
             navigatepageNums = new int[pages];
-            for (int i = 0; i < pages; i++)
-            {
+            for (int i = 0; i < pages; i++) {
                 navigatepageNums[i] = i + 1;
             }
         }
-        else
-        { //当总页数大于导航页码数时
+        else { //当总页数大于导航页码数时
             navigatepageNums = new int[navigatePages];
             int startNum = pageNum - navigatePages / 2;
             int endNum = pageNum + navigatePages / 2;
             
-            if (startNum < 1)
-            {
+            if (startNum < 1) {
                 startNum = 1;
                 //(最前navigatePages页
-                for (int i = 0; i < navigatePages; i++)
-                {
+                for (int i = 0; i < navigatePages; i++) {
                     navigatepageNums[i] = startNum++;
                 }
             }
-            else if (endNum > pages)
-            {
+            else if (endNum > pages) {
                 endNum = pages;
                 //最后navigatePages页
-                for (int i = navigatePages - 1; i >= 0; i--)
-                {
+                for (int i = navigatePages - 1; i >= 0; i--) {
                     navigatepageNums[i] = endNum--;
                 }
             }
-            else
-            {
+            else {
                 //所有中间页
-                for (int i = 0; i < navigatePages; i++)
-                {
+                for (int i = 0; i < navigatePages; i++) {
                     navigatepageNums[i] = startNum++;
                 }
             }
@@ -168,18 +154,14 @@ public class PageInfo<E>
     /**
      * 计算前后页，第一页，最后一页
      */
-    private void calcPage()
-    {
-        if (navigatepageNums != null && navigatepageNums.length > 0)
-        {
+    private void calcPage() {
+        if (navigatepageNums != null && navigatepageNums.length > 0) {
             firstPage = navigatepageNums[0];
             lastPage = navigatepageNums[navigatepageNums.length - 1];
-            if (pageNum > 1)
-            {
+            if (pageNum > 1) {
                 prePage = pageNum - 1;
             }
-            if (pageNum < pages)
-            {
+            if (pageNum < pages) {
                 nextPage = pageNum + 1;
             }
         }
@@ -188,191 +170,154 @@ public class PageInfo<E>
     /**
      * 判定页面边界
      */
-    private void judgePageBoudary()
-    {
+    private void judgePageBoudary() {
         isFirstPage = pageNum == 1;
         isLastPage = pageNum == pages;
         hasPreviousPage = pageNum > 1;
         hasNextPage = pageNum < pages;
     }
     
-    public int getPageNum()
-    {
+    public int getPageNum() {
         return pageNum;
     }
     
-    public void setPageNum(int pageNum)
-    {
+    public void setPageNum(int pageNum) {
         this.pageNum = pageNum;
     }
     
-    public int getPageSize()
-    {
+    public int getPageSize() {
         return pageSize;
     }
     
-    public void setPageSize(int pageSize)
-    {
+    public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
     
-    public int getSize()
-    {
+    public int getSize() {
         return size;
     }
     
-    public void setSize(int size)
-    {
+    public void setSize(int size) {
         this.size = size;
     }
     
-    public int getStartRow()
-    {
+    public int getStartRow() {
         return startRow;
     }
     
-    public void setStartRow(int startRow)
-    {
+    public void setStartRow(int startRow) {
         this.startRow = startRow;
     }
     
-    public int getEndRow()
-    {
+    public int getEndRow() {
         return endRow;
     }
     
-    public void setEndRow(int endRow)
-    {
+    public void setEndRow(int endRow) {
         this.endRow = endRow;
     }
     
-    public long getTotal()
-    {
+    public long getTotal() {
         return total;
     }
     
-    public void setTotal(long total)
-    {
+    public void setTotal(long total) {
         this.total = total;
     }
     
-    public int getPages()
-    {
+    public int getPages() {
         return pages;
     }
     
-    public void setPages(int pages)
-    {
+    public void setPages(int pages) {
         this.pages = pages;
     }
     
-    public int getFirstPage()
-    {
+    public int getFirstPage() {
         return firstPage;
     }
     
-    public void setFirstPage(int firstPage)
-    {
+    public void setFirstPage(int firstPage) {
         this.firstPage = firstPage;
     }
     
-    public int getPrePage()
-    {
+    public int getPrePage() {
         return prePage;
     }
     
-    public void setPrePage(int prePage)
-    {
+    public void setPrePage(int prePage) {
         this.prePage = prePage;
     }
     
-    public int getNextPage()
-    {
+    public int getNextPage() {
         return nextPage;
     }
     
-    public void setNextPage(int nextPage)
-    {
+    public void setNextPage(int nextPage) {
         this.nextPage = nextPage;
     }
     
-    public int getLastPage()
-    {
+    public int getLastPage() {
         return lastPage;
     }
     
-    public void setLastPage(int lastPage)
-    {
+    public void setLastPage(int lastPage) {
         this.lastPage = lastPage;
     }
     
-    public boolean isFirstPage()
-    {
+    public boolean isFirstPage() {
         return isFirstPage;
     }
     
-    public void setFirstPage(boolean isFirstPage)
-    {
+    public void setFirstPage(boolean isFirstPage) {
         this.isFirstPage = isFirstPage;
     }
     
-    public boolean isLastPage()
-    {
+    public boolean isLastPage() {
         return isLastPage;
     }
     
-    public void setLastPage(boolean isLastPage)
-    {
+    public void setLastPage(boolean isLastPage) {
         this.isLastPage = isLastPage;
     }
     
-    public boolean isHasPreviousPage()
-    {
+    public boolean isHasPreviousPage() {
         return hasPreviousPage;
     }
     
-    public void setHasPreviousPage(boolean hasPreviousPage)
-    {
+    public void setHasPreviousPage(boolean hasPreviousPage) {
         this.hasPreviousPage = hasPreviousPage;
     }
     
-    public boolean isHasNextPage()
-    {
+    public boolean isHasNextPage() {
         return hasNextPage;
     }
     
-    public void setHasNextPage(boolean hasNextPage)
-    {
+    public void setHasNextPage(boolean hasNextPage) {
         this.hasNextPage = hasNextPage;
     }
     
-    public int getNavigatePages()
-    {
+    public int getNavigatePages() {
         return navigatePages;
     }
     
-    public void setNavigatePages(int navigatePages)
-    {
+    public void setNavigatePages(int navigatePages) {
         this.navigatePages = navigatePages;
     }
     
-    public int[] getNavigatepageNums()
-    {
+    public int[] getNavigatepageNums() {
         return navigatepageNums;
     }
     
-    public void setNavigatepageNums(int[] navigatepageNums)
-    {
+    public void setNavigatepageNums(int[] navigatepageNums) {
         this.navigatepageNums = navigatepageNums;
     }
     
-    public Collection<E> getDataList()
-    {
+    public Collection<E> getDataList() {
         return dataList;
     }
     
-    public void setDataList(Collection<E> dataList)
-    {
+    public void setDataList(Collection<E> dataList) {
         this.dataList = dataList;
     }
 }

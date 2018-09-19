@@ -14,15 +14,12 @@ import java.util.TreeSet;
 
 /**
  * 集合帮助类
- * @author  qinzhengliang
- * @version  [版本号, 2017年3月23日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class CollectionUtility
-{
-    private CollectionUtility()
-    {
+public class CollectionUtility {
+    private CollectionUtility() {
     }
     
     /**
@@ -33,18 +30,14 @@ public class CollectionUtility
      * @param conjunction 分隔符
      * @return 连接后的字符串
      */
-    public static <T> String join(Iterable<T> collection, String conjunction)
-    {
+    public static <T> String join(Iterable<T> collection, String conjunction) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        for (T item : collection)
-        {
-            if (isFirst)
-            {
+        for (T item : collection) {
+            if (isFirst) {
                 isFirst = false;
             }
-            else
-            {
+            else {
                 sb.append(conjunction);
             }
             sb.append(item);
@@ -60,18 +53,14 @@ public class CollectionUtility
      * @param conjunction 分隔符
      * @return 连接后的字符串
      */
-    public static <T> String join(T[] array, String conjunction)
-    {
+    public static <T> String join(T[] array, String conjunction) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        for (T item : array)
-        {
-            if (isFirst)
-            {
+        for (T item : array) {
+            if (isFirst) {
                 isFirst = false;
             }
-            else
-            {
+            else {
                 sb.append(conjunction);
             }
             sb.append(item);
@@ -85,8 +74,7 @@ public class CollectionUtility
      * @param set 被排序的Set
      * @return 排序后的Set
      */
-    public static List<Map.Entry<Long, Long>> sortEntrySetToList(Set<Map.Entry<Long, Long>> set)
-    {
+    public static List<Map.Entry<Long, Long>> sortEntrySetToList(Set<Map.Entry<Long, Long>> set) {
         List<Map.Entry<Long, Long>> list = new LinkedList<>(set);
         Collections.sort(list, (o1, o2) -> {
             if (o1.getValue() > o2.getValue())
@@ -106,27 +94,21 @@ public class CollectionUtility
      * @param partSize        每部分数据的长度
      * @return 切取出的数据或null
      */
-    public static <T> List<T> popPart(Deque<T> surplusAlaDatas, int partSize)
-    {
-        if (surplusAlaDatas == null || surplusAlaDatas.isEmpty())
-        {
+    public static <T> List<T> popPart(Deque<T> surplusAlaDatas, int partSize) {
+        if (surplusAlaDatas == null || surplusAlaDatas.isEmpty()) {
             return new ArrayList<>();
         }
         
         List<T> currentAlaDatas = new ArrayList<>();
         int size = surplusAlaDatas.size();
         // 切割
-        if (size > partSize)
-        {
-            for (int i = 0; i < partSize; i++)
-            {
+        if (size > partSize) {
+            for (int i = 0; i < partSize; i++) {
                 currentAlaDatas.add(surplusAlaDatas.pop());
             }
         }
-        else
-        {
-            for (int i = 0; i < size; i++)
-            {
+        else {
+            for (int i = 0; i < size; i++) {
                 currentAlaDatas.add(surplusAlaDatas.pop());
             }
         }
@@ -140,8 +122,7 @@ public class CollectionUtility
      * @param excludedEnd 结束的数字（不包含）
      * @return 数字列表
      */
-    public static int[] range(int excludedEnd)
-    {
+    public static int[] range(int excludedEnd) {
         return range(0, excludedEnd, 1);
     }
     
@@ -153,8 +134,7 @@ public class CollectionUtility
      * @param excludedEnd   结束的数字（不包含）
      * @return 数字列表
      */
-    public static int[] range(int includedStart, int excludedEnd)
-    {
+    public static int[] range(int includedStart, int excludedEnd) {
         return range(includedStart, excludedEnd, 1);
     }
     
@@ -167,33 +147,28 @@ public class CollectionUtility
      * @param step          步进
      * @return 数字列表
      */
-    public static int[] range(int start, int end, int step)
-    {
+    public static int[] range(int start, int end, int step) {
         int includedStart = start;
         int excludedEnd = end;
         int stepTemp = step;
         
-        if (includedStart > excludedEnd)
-        {
+        if (includedStart > excludedEnd) {
             int tmp = includedStart;
             includedStart = excludedEnd;
             excludedEnd = tmp;
         }
         
-        if (stepTemp <= 0)
-        {
+        if (stepTemp <= 0) {
             stepTemp = 1;
         }
         
         int deviation = excludedEnd - includedStart;
         int length = deviation / stepTemp;
-        if (deviation % stepTemp != 0)
-        {
+        if (deviation % stepTemp != 0) {
             length += 1;
         }
         int[] range = new int[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             range[i] = includedStart;
             includedStart += stepTemp;
         }
@@ -208,27 +183,22 @@ public class CollectionUtility
      * @param endTemp   结束位置（不包含）
      * @return 截取后的数组，当开始位置超过最大时，返回null
      */
-    public static <T> List<T> sub(List<T> list, int start, int end)
-    {
-        if (list == null || list.isEmpty())
-        {
+    public static <T> List<T> sub(List<T> list, int start, int end) {
+        if (list == null || list.isEmpty()) {
             return new ArrayList<>();
         }
         int startTemp = start < 0 ? 0 : start;
         int endTemp = end < 0 ? 0 : end;
         
-        if (startTemp > endTemp)
-        {
+        if (startTemp > endTemp) {
             int tmp = startTemp;
             startTemp = endTemp;
             endTemp = tmp;
         }
         
         final int size = list.size();
-        if (endTemp > size)
-        {
-            if (startTemp >= size)
-            {
+        if (endTemp > size) {
+            if (startTemp >= size) {
                 return null;
             }
             endTemp = size;
@@ -245,10 +215,8 @@ public class CollectionUtility
      * @param end   结束位置（不包含）
      * @return 截取后的数组，当开始位置超过最大时，返回null
      */
-    public static <T> List<T> sub(Collection<T> list, int start, int end)
-    {
-        if (list == null || list.isEmpty())
-        {
+    public static <T> List<T> sub(Collection<T> list, int start, int end) {
+        if (list == null || list.isEmpty()) {
             return new ArrayList<>();
         }
         
@@ -261,8 +229,7 @@ public class CollectionUtility
      * @param array 数组
      * @return 是否为空
      */
-    public static <T> boolean isEmpty(T[] array)
-    {
+    public static <T> boolean isEmpty(T[] array) {
         return array == null || array.length == 0;
     }
     
@@ -272,8 +239,7 @@ public class CollectionUtility
      * @param array 数组
      * @return 是否为非空
      */
-    public static <T> boolean isNotEmpty(T[] array)
-    {
+    public static <T> boolean isNotEmpty(T[] array) {
         return !isEmpty(array);
     }
     
@@ -283,8 +249,7 @@ public class CollectionUtility
      * @param collection 集合
      * @return 是否为空
      */
-    public static boolean isEmpty(Collection<?> collection)
-    {
+    public static boolean isEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
     }
     
@@ -294,8 +259,7 @@ public class CollectionUtility
      * @param collection 集合
      * @return 是否为非空
      */
-    public static boolean isNotEmpty(Collection<?> collection)
-    {
+    public static boolean isNotEmpty(Collection<?> collection) {
         return false == isEmpty(collection);
     }
     
@@ -305,8 +269,7 @@ public class CollectionUtility
      * @param map 集合
      * @return 是否为空
      */
-    public static boolean isEmpty(Map<?, ?> map)
-    {
+    public static boolean isEmpty(Map<?, ?> map) {
         return map == null || map.isEmpty();
     }
     
@@ -316,8 +279,7 @@ public class CollectionUtility
      * @param map 集合
      * @return 是否为非空
      */
-    public static boolean isNotEmpty(Map<?, ?> map)
-    {
+    public static boolean isNotEmpty(Map<?, ?> map) {
         return !isEmpty(map);
     }
     
@@ -328,18 +290,14 @@ public class CollectionUtility
      * @param value 被检查的元素
      * @return 是否包含
      */
-    public static <T> boolean contains(T[] array, T value)
-    {
+    public static <T> boolean contains(T[] array, T value) {
         final Class<?> componetType = array.getClass().getComponentType();
         boolean isPrimitive = false;
-        if (null != componetType)
-        {
+        if (null != componetType) {
             isPrimitive = componetType.isPrimitive();
         }
-        for (T t : array)
-        {
-            if (t == value)
-            {
+        for (T t : array) {
+            if (t == value) {
                 return true;
             }
             return (!isPrimitive && null != value && value.equals(t));
@@ -353,11 +311,9 @@ public class CollectionUtility
      * @param entryCollection entry集合
      * @return Map
      */
-    public static <T, K> Map<T, K> toMap(Collection<Map.Entry<T, K>> entryCollection)
-    {
+    public static <T, K> Map<T, K> toMap(Collection<Map.Entry<T, K>> entryCollection) {
         Map<T, K> map = new HashMap<>();
-        for (Map.Entry<T, K> entry : entryCollection)
-        {
+        for (Map.Entry<T, K> entry : entryCollection) {
             map.put(entry.getKey(), entry.getValue());
         }
         return map;
@@ -370,11 +326,9 @@ public class CollectionUtility
      * @param comparator 比较器
      * @return treeSet
      */
-    public static <T> Set<T> toTreeSet(Collection<T> collection, Comparator<T> comparator)
-    {
+    public static <T> Set<T> toTreeSet(Collection<T> collection, Comparator<T> comparator) {
         final Set<T> treeSet = new TreeSet<>(comparator);
-        for (T t : collection)
-        {
+        for (T t : collection) {
             treeSet.add(t);
         }
         return treeSet;
@@ -387,8 +341,7 @@ public class CollectionUtility
      * @param comparator 比较器
      * @return treeSet
      */
-    public static <T> List<T> sort(Collection<T> collection, Comparator<T> comparator)
-    {
+    public static <T> List<T> sort(Collection<T> collection, Comparator<T> comparator) {
         List<T> list = new ArrayList<>(collection);
         Collections.sort(list, comparator);
         return list;
@@ -400,12 +353,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Integer[] wrap(int... values)
-    {
+    public static Integer[] wrap(int... values) {
         final int length = values.length;
         Integer[] array = new Integer[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -417,12 +368,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Long[] wrap(long... values)
-    {
+    public static Long[] wrap(long... values) {
         final int length = values.length;
         Long[] array = new Long[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -434,12 +383,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Character[] wrap(char... values)
-    {
+    public static Character[] wrap(char... values) {
         final int length = values.length;
         Character[] array = new Character[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -451,12 +398,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Byte[] wrap(byte... values)
-    {
+    public static Byte[] wrap(byte... values) {
         final int length = values.length;
         Byte[] array = new Byte[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -468,12 +413,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Short[] wrap(short... values)
-    {
+    public static Short[] wrap(short... values) {
         final int length = values.length;
         Short[] array = new Short[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -485,12 +428,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Float[] wrap(float... values)
-    {
+    public static Float[] wrap(float... values) {
         final int length = values.length;
         Float[] array = new Float[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -502,12 +443,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Double[] wrap(double... values)
-    {
+    public static Double[] wrap(double... values) {
         final int length = values.length;
         Double[] array = new Double[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;
@@ -519,12 +458,10 @@ public class CollectionUtility
      * @param values 基本类型数组
      * @return 包装类型数组
      */
-    public static Boolean[] wrap(boolean... values)
-    {
+    public static Boolean[] wrap(boolean... values) {
         final int length = values.length;
         Boolean[] array = new Boolean[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             array[i] = values[i];
         }
         return array;

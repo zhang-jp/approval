@@ -23,17 +23,13 @@ import com.tenkent.infrastructure.log.LoggerManager;
  * Map 对象与 JavaBean 对象互转工具类 
  * 
  * @author  zhangjiaping
- * @version  [版本号, 2016年11月10日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @version  [版本号, 2018年9月19日]
  */
-public class BeanToMapUtil
-{
+public class BeanToMapUtil {
     /**
      * <默认构造函数>
      */
-    private BeanToMapUtil()
-    {
+    private BeanToMapUtil() {
     }
     
     /**
@@ -47,22 +43,18 @@ public class BeanToMapUtil
      * @see [类、类#方法、类#成员]
      */
     public static <T> T convertMap2Bean(Map<String, Object> map, Class<T> T)
-        throws Exception
-    {
-        if (map == null || map.size() == 0)
-        {
+        throws Exception {
+        if (map == null || map.size() == 0) {
             return null;
         }
         //获取map中所有的key值，全部更新成大写，添加到keys集合中,与mybatis中驼峰命名匹配
         Object mvalue = null;
         Map<String, Object> newMap = new HashMap<>();
         Iterator<Entry<String, Object>> it = map.entrySet().iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             String key = it.next().getKey();
             mvalue = map.get(key);
-            if (key.indexOf(CharacterConstant.UNDERLINE) != -1)
-            {
+            if (key.indexOf(CharacterConstant.UNDERLINE) != -1) {
                 key = key.replaceAll(CharacterConstant.UNDERLINE, "");
             }
             newMap.put(key.toUpperCase(Locale.US), mvalue);
@@ -71,14 +63,12 @@ public class BeanToMapUtil
         BeanInfo beanInfo = Introspector.getBeanInfo(T);
         T bean = T.newInstance();
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-        for (int i = 0, n = propertyDescriptors.length; i < n; i++)
-        {
+        for (int i = 0, n = propertyDescriptors.length; i < n; i++) {
             PropertyDescriptor descriptor = propertyDescriptors[i];
             String propertyName = descriptor.getName();
             String upperPropertyName = propertyName.toUpperCase();
             
-            if (newMap.keySet().contains(upperPropertyName))
-            {
+            if (newMap.keySet().contains(upperPropertyName)) {
                 Object value = newMap.get(upperPropertyName);
                 //这个方法不会报参数类型不匹配的错误。
                 BeanUtils.copyProperty(bean, propertyName, value);
@@ -99,27 +89,22 @@ public class BeanToMapUtil
      * @see [类、类#方法、类#成员]
      */
     public static Map<String, Object> convertBean2Map(Object bean)
-        throws IntrospectionException, IllegalAccessException, InvocationTargetException
-    {
+        throws IntrospectionException, IllegalAccessException, InvocationTargetException {
         Class<? extends Object> type = bean.getClass();
         Map<String, Object> returnMap = new HashMap<>();
         BeanInfo beanInfo = Introspector.getBeanInfo(type);
         
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-        for (int i = 0; i < propertyDescriptors.length; i++)
-        {
+        for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor descriptor = propertyDescriptors[i];
             String propertyName = descriptor.getName();
-            if (!"class".equals(propertyName))
-            {
+            if (!"class".equals(propertyName)) {
                 Method readMethod = descriptor.getReadMethod();
                 Object result = readMethod.invoke(bean, new Object[0]);
-                if (result != null)
-                {
+                if (result != null) {
                     returnMap.put(propertyName, result);
                 }
-                else
-                {
+                else {
                     returnMap.put(propertyName, null);
                 }
             }
@@ -138,13 +123,10 @@ public class BeanToMapUtil
      * @see [类、类#方法、类#成员]
      */
     public static <T> List<T> convertListMap2ListBean(List<Map<String, Object>> listMap, Class<T> T)
-        throws Exception
-    {
+        throws Exception {
         List<T> beanList = new ArrayList<>();
-        if (listMap != null && !listMap.isEmpty())
-        {
-            for (int i = 0, n = listMap.size(); i < n; i++)
-            {
+        if (listMap != null && !listMap.isEmpty()) {
+            for (int i = 0, n = listMap.size(); i < n; i++) {
                 Map<String, Object> map = listMap.get(i);
                 T bean = convertMap2Bean(map, T);
                 beanList.add(bean);
@@ -163,20 +145,16 @@ public class BeanToMapUtil
      * @throws Exception
      * @see [类、类#方法、类#成员]
      */
-    public static <T> List<Map<String, Object>> convertListBean2ListMap(List<T> beanList, Class<T> T)
-    {
+    public static <T> List<Map<String, Object>> convertListBean2ListMap(List<T> beanList, Class<T> T) {
         List<Map<String, Object>> mapList = new ArrayList<>();
-        try
-        {
-            for (int i = 0, n = beanList.size(); i < n; i++)
-            {
+        try {
+            for (int i = 0, n = beanList.size(); i < n; i++) {
                 Object bean = beanList.get(i);
                 Map<String, Object> map = convertBean2Map(bean);
                 mapList.add(map);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(T, e, "将 List<JavaBean>对象转化为List<Map>失败, beanList:{}", beanList);
             return mapList;
         }

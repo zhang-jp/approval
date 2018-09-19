@@ -27,13 +27,10 @@ import com.tenkent.infrastructure.log.LoggerManager;
 /**
  * Excel帮助类
  * 
- * @author  qinzhengliang
- * @version  [版本号, 2017年3月23日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class PoiUtils
-{
+public class PoiUtils {
     private static final String XLS_LOWER_CASE = "xls";
     
     private static final String XLSX_LOWER_CASE = "xlsx";
@@ -44,8 +41,7 @@ public class PoiUtils
     
     private static final String PARSE_ERROR = "excel解析异常";
     
-    private PoiUtils()
-    {
+    private PoiUtils() {
     }
     
     /**
@@ -55,27 +51,21 @@ public class PoiUtils
      * @param headerCount 表头行数
      * @return count 如果文件路径为空，返回0；
      */
-    public static Map<String, List<String[]>> readRecordsInputPath(String path, boolean isHeader, int headerCount)
-    {
-        if (isNotExcelPath(path))
-        {
+    public static Map<String, List<String[]>> readRecordsInputPath(String path, boolean isHeader, int headerCount) {
+        if (isNotExcelPath(path)) {
             return new HashMap<>();
         }
         
         File file = new File(path);
-        try (InputStream inputStream = new FileInputStream(file))
-        {
-            if (path.endsWith(XLS_LOWER_CASE) || path.endsWith(XLS_UPPER_CASE))
-            {
+        try (InputStream inputStream = new FileInputStream(file)) {
+            if (path.endsWith(XLS_LOWER_CASE) || path.endsWith(XLS_UPPER_CASE)) {
                 return readXLSRecords(inputStream, isHeader, headerCount);
             }
-            else if (path.endsWith(XLSX_LOWER_CASE) || path.endsWith(XLSX_UPPER_CASE))
-            {
+            else if (path.endsWith(XLSX_LOWER_CASE) || path.endsWith(XLSX_UPPER_CASE)) {
                 return readXLSXRecords(inputStream, isHeader, headerCount);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(PoiUtils.class, e, PARSE_ERROR);
         }
         return new HashMap<>();
@@ -88,34 +78,26 @@ public class PoiUtils
      * @param headerCount 表头行数
      * @return count 如果文件路径为空，返回0；
      */
-    public static Map<String, List<String[]>> readRecordsInputPath(MultipartFile file, boolean isHeader,
-        int headerCount)
-    {
-        if (file == null)
-        {
+    public static Map<String, List<String[]>> readRecordsInputPath(MultipartFile file, boolean isHeader, int headerCount) {
+        if (file == null) {
             return new HashMap<>();
         }
         
         //获取后缀名
         String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
-        if (isNotExcelPath(suffix))
-        {
+        if (isNotExcelPath(suffix)) {
             return new HashMap<>();
         }
         
-        try (InputStream inputStream = file.getInputStream())
-        {
-            if (suffix.endsWith(XLS_LOWER_CASE) || suffix.endsWith(XLS_UPPER_CASE))
-            {
+        try (InputStream inputStream = file.getInputStream()) {
+            if (suffix.endsWith(XLS_LOWER_CASE) || suffix.endsWith(XLS_UPPER_CASE)) {
                 return readXLSRecords(inputStream, isHeader, headerCount);
             }
-            else if (suffix.endsWith(XLSX_LOWER_CASE) || suffix.endsWith(XLSX_UPPER_CASE))
-            {
+            else if (suffix.endsWith(XLSX_LOWER_CASE) || suffix.endsWith(XLSX_UPPER_CASE)) {
                 return readXLSXRecords(inputStream, isHeader, headerCount);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(PoiUtils.class, e, PARSE_ERROR);
         }
         return new HashMap<>();
@@ -129,15 +111,11 @@ public class PoiUtils
      * @param headerCount  表头占用行数
      * @return 返回一个字符串数组List
      */
-    public static Map<String, List<String[]>> readXLSRecords1(InputStream inputStream, boolean isHeader,
-        int headerCount)
-    {
-        try (HSSFWorkbook wbs = new HSSFWorkbook(inputStream);)
-        {
+    public static Map<String, List<String[]>> readXLSRecords1(InputStream inputStream, boolean isHeader, int headerCount) {
+        try (HSSFWorkbook wbs = new HSSFWorkbook(inputStream);) {
             Map<String, List<String[]>> records = new HashMap<>();
             int sheetNum = wbs.getNumberOfSheets();
-            for (int i = 0; i < sheetNum; i++)
-            {
+            for (int i = 0; i < sheetNum; i++) {
                 HSSFSheet childSheet = wbs.getSheetAt(i);
                 List<String[]> poiList = readXLSSheet(isHeader, headerCount, childSheet);
                 records.put(childSheet.getSheetName(), poiList);
@@ -145,8 +123,7 @@ public class PoiUtils
             
             return records;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(PoiUtils.class, e, PARSE_ERROR);
             return new HashMap<>();
         }
@@ -160,38 +137,30 @@ public class PoiUtils
      * @param headerCount  表头占用行数
      * @return 返回一个字符串数组List
      */
-    public static Map<String, List<String[]>> readXLSRecords(InputStream inputStream, boolean isHeader, int headerCount)
-    {
+    public static Map<String, List<String[]>> readXLSRecords(InputStream inputStream, boolean isHeader, int headerCount) {
         Map<String, List<String[]>> records = new HashMap<>();
         List<String[]> poiList = null;
         HSSFWorkbook wbs = null;
-        try
-        {
+        try {
             wbs = new HSSFWorkbook(inputStream);
             int sheetNum = wbs.getNumberOfSheets();
-            for (int i = 0; i < sheetNum; i++)
-            {
+            for (int i = 0; i < sheetNum; i++) {
                 HSSFSheet childSheet = wbs.getSheetAt(i);
                 poiList = readXLSSheet(isHeader, headerCount, childSheet);
                 records.put(childSheet.getSheetName(), poiList);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(PoiUtils.class, e, "excel解析异常");
             return null;
         }
-        finally
-        {
-            try
-            {
-                if (wbs != null)
-                {
+        finally {
+            try {
+                if (wbs != null) {
                     wbs.close();
                 }
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 LoggerManager.error(PoiUtils.class, e, "excel关闭异常");
             }
         }
@@ -206,29 +175,24 @@ public class PoiUtils
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static List<String[]> readXLSSheet(boolean isHeader, int headerCount, HSSFSheet childSheet)
-    {
+    private static List<String[]> readXLSSheet(boolean isHeader, int headerCount, HSSFSheet childSheet) {
         List<String[]> poiList = new ArrayList<>();
         //获取表头
         int begin = childSheet.getFirstRowNum();
         HSSFRow firstRow = childSheet.getRow(begin);
         int cellTotal = firstRow.getPhysicalNumberOfCells();
         //是否跳过表头解析数据
-        if (isHeader)
-        {
+        if (isHeader) {
             begin += headerCount;
         }
         //逐行获取单元格数据
-        for (int i = begin; i <= childSheet.getLastRowNum(); i++)
-        {
+        for (int i = begin; i <= childSheet.getLastRowNum(); i++) {
             //获取行数据
             HSSFRow row = childSheet.getRow(i);
-            if (null != row)
-            {
+            if (null != row) {
                 String[] cells = getRowData(cellTotal, row);
                 //判断是否空行  功能：过滤空行情况
-                if (CollectionUtility.isNotEmpty(cells))
-                {
+                if (CollectionUtility.isNotEmpty(cells)) {
                     poiList.add(cells);
                 }
             }
@@ -245,23 +209,18 @@ public class PoiUtils
      * @param headerCount 表头占用行数
      * @return 返回一个字符串数组List
      */
-    public static Map<String, List<String[]>> readXLSXRecords(InputStream inputStream, boolean isHeader,
-        int headerCount)
-    {
-        try (XSSFWorkbook wbs = new XSSFWorkbook(inputStream))
-        {
+    public static Map<String, List<String[]>> readXLSXRecords(InputStream inputStream, boolean isHeader, int headerCount) {
+        try (XSSFWorkbook wbs = new XSSFWorkbook(inputStream)) {
             Map<String, List<String[]>> records = new HashMap<>();
             int sheetNum = wbs.getNumberOfSheets();
-            for (int i = 0; i < sheetNum; i++)
-            {
+            for (int i = 0; i < sheetNum; i++) {
                 XSSFSheet childSheet = wbs.getSheetAt(i);
                 List<String[]> poiList = readXLSXSheet(isHeader, headerCount, childSheet);
                 records.put(childSheet.getSheetName(), poiList);
             }
             return records;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(PoiUtils.class, e, PARSE_ERROR);
             return new HashMap<>();
         }
@@ -275,8 +234,7 @@ public class PoiUtils
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static List<String[]> readXLSXSheet(boolean isHeader, int headerCount, XSSFSheet childSheet)
-    {
+    private static List<String[]> readXLSXSheet(boolean isHeader, int headerCount, XSSFSheet childSheet) {
         List<String[]> poiList = new ArrayList<>();
         //获取表头
         int begin = childSheet.getFirstRowNum();
@@ -284,20 +242,16 @@ public class PoiUtils
         int cellTotal = firstRow.getPhysicalNumberOfCells();
         
         //是否跳过表头解析数据
-        if (isHeader)
-        {
+        if (isHeader) {
             begin += headerCount;
         }
-        for (int i = begin; i <= childSheet.getLastRowNum(); i++)
-        {
+        for (int i = begin; i <= childSheet.getLastRowNum(); i++) {
             //一行
             XSSFRow row = childSheet.getRow(i);
-            if (null != row)
-            {
+            if (null != row) {
                 String[] cells = getRowData(cellTotal, row);
                 //判断是否空行  功能：过滤空行情况
-                if (CollectionUtility.isNotEmpty(cells))
-                {
+                if (CollectionUtility.isNotEmpty(cells)) {
                     poiList.add(cells);
                 }
             }
@@ -314,15 +268,12 @@ public class PoiUtils
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static String[] getRowData(int cellTotal, HSSFRow row)
-    {
+    private static String[] getRowData(int cellTotal, HSSFRow row) {
         String[] cells = new String[cellTotal];
-        for (int k = 0; k < cellTotal; k++)
-        {
+        for (int k = 0; k < cellTotal; k++) {
             HSSFCell cell = row.getCell(k);
             String tempValue = getStringXLSCellValue(cell);
-            if (!StringUtility.isEmpty(tempValue.trim()))
-            {
+            if (!StringUtility.isEmpty(tempValue.trim())) {
                 return new String[] {};
             }
             cells[k] = getStringXLSCellValue(cell);
@@ -338,24 +289,20 @@ public class PoiUtils
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static String[] getRowData(int cellTotal, XSSFRow row)
-    {
+    private static String[] getRowData(int cellTotal, XSSFRow row) {
         //是否空行标志 true:空行 false:非空行
         boolean flagEmptyRow = true;
         String[] cells = new String[cellTotal];
-        for (int k = 0; k < cellTotal; k++)
-        {
+        for (int k = 0; k < cellTotal; k++) {
             XSSFCell cell = row.getCell(k);
             String tempValue = getStringXLSXCellValue(cell);
-            if (!StringUtility.isEmpty(tempValue.trim()))
-            {
+            if (!StringUtility.isEmpty(tempValue.trim())) {
                 flagEmptyRow = false;
             }
             cells[k] = getStringXLSXCellValue(cell);
         }
         //判断是否空行  功能：过滤空行情况
-        if (flagEmptyRow)
-        {
+        if (flagEmptyRow) {
             return new String[] {};
         }
         return cells;
@@ -367,10 +314,8 @@ public class PoiUtils
      * @param cell Excel单元格
      * @return String 单元格数据内容
      */
-    private static String getStringXLSCellValue(HSSFCell cell)
-    {
-        if (cell == null)
-        {
+    private static String getStringXLSCellValue(HSSFCell cell) {
+        if (cell == null) {
             return StringUtils.EMPTY;
         }
         
@@ -381,8 +326,7 @@ public class PoiUtils
         df.applyPattern(sb.toString());
         
         String strCell;
-        switch (cell.getCellType())
-        {
+        switch (cell.getCellType()) {
             case HSSFCell.CELL_TYPE_STRING:
                 strCell = cell.getStringCellValue();
                 break;
@@ -405,10 +349,8 @@ public class PoiUtils
      * @param cell Excel单元格
      * @return String 单元格数据内容
      */
-    private static String getStringXLSXCellValue(XSSFCell cell)
-    {
-        if (cell == null)
-        {
+    private static String getStringXLSXCellValue(XSSFCell cell) {
+        if (cell == null) {
             return StringUtils.EMPTY;
         }
         
@@ -419,21 +361,17 @@ public class PoiUtils
         df.applyPattern(sb.toString());
         
         String strCell;
-        switch (cell.getCellType())
-        {
+        switch (cell.getCellType()) {
             case XSSFCell.CELL_TYPE_STRING:
                 strCell = cell.getStringCellValue();
                 break;
             case XSSFCell.CELL_TYPE_NUMERIC:
                 double value = cell.getNumericCellValue();
-                while (Double.parseDouble(df.format(value)) != value)
-                {
-                    if ("0".equals(sb.toString()))
-                    {
+                while (Double.parseDouble(df.format(value)) != value) {
+                    if ("0".equals(sb.toString())) {
                         sb.append(".0");
                     }
-                    else
-                    {
+                    else {
                         sb.append("0");
                     }
                     df.applyPattern(sb.toString());
@@ -456,10 +394,8 @@ public class PoiUtils
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static boolean isNotExcelPath(String path)
-    {
-        if (StringUtility.isEmpty(path))
-        {
+    private static boolean isNotExcelPath(String path) {
+        if (StringUtility.isEmpty(path)) {
             return true;
         }
         return !path.endsWith(XLS_LOWER_CASE) && !path.endsWith(XLSX_LOWER_CASE) && !path.endsWith(XLS_UPPER_CASE)

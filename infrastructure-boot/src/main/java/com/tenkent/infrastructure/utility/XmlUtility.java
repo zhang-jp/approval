@@ -17,13 +17,13 @@ import org.dom4j.io.SAXReader;
 import com.tenkent.infrastructure.log.LoggerManager;
 
 /**
- * Created by FirenzesEagle on 2016/7/7 0007.
- * Email:liumingbo2008@gmail.com
+ * xml解析
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class XmlUtility
-{
-    private XmlUtility()
-    {
+public class XmlUtility {
+    private XmlUtility() {
     }
     
     /**
@@ -33,16 +33,13 @@ public class XmlUtility
      * @return
      * @throws Exception
      */
-    public static Map<String, String> parseRequestXmlToMap(HttpServletRequest request)
-    {
-        try
-        {
+    public static Map<String, String> parseRequestXmlToMap(HttpServletRequest request) {
+        try {
             // 解析结果存储在HashMap中
             InputStream inputStream = request.getInputStream();
             return parseInputStreamToMap(inputStream);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(XmlUtility.class, e, "parse request xml to map exption");
             return new HashMap<>();
         }
@@ -56,10 +53,8 @@ public class XmlUtility
      * @throws DocumentException
      * @throws IOException
      */
-    public static Map<String, String> parseInputStreamToMap(InputStream inputStream)
-    {
-        try
-        {
+    public static Map<String, String> parseInputStreamToMap(InputStream inputStream) {
+        try {
             // 解析结果存储在HashMap中
             Map<String, String> map = new HashMap<String, String>();
             // 读取输入流
@@ -71,14 +66,12 @@ public class XmlUtility
             @SuppressWarnings("unchecked")
             List<Element> elementList = root.elements();
             //遍历所有子节点
-            for (Element e : elementList)
-            {
+            for (Element e : elementList) {
                 map.put(e.getName(), e.getText());
             }
             return map;
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(XmlUtility.class, e, "parse request xml to map exption");
             return new HashMap<>();
         }
@@ -91,15 +84,12 @@ public class XmlUtility
      * @return
      * @throws Exception
      */
-    public static Map<String, String> parseXmlStringToMap(String str)
-    {
-        try
-        {
+    public static Map<String, String> parseXmlStringToMap(String str) {
+        try {
             InputStream inputStream = new ByteArrayInputStream(str.getBytes("UTF-8"));
             return parseInputStreamToMap(inputStream);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(XmlUtility.class, e, "parse request xml to map exption");
             return new HashMap<>();
         }

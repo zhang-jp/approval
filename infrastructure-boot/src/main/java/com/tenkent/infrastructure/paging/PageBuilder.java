@@ -8,18 +8,16 @@ import com.tenkent.infrastructure.exception.InfrastructureException;
 /**
  * 分页数据建造器
  * 
- * @author  qinzhengliang
- * @version  [版本号, 2017年5月15日]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class PageBuilder<E>
-{
+public class PageBuilder<E> {
     private PageInfo<E> info = null;
     
     /**
      * 构造方法
      */
-    public PageBuilder()
-    {
+    public PageBuilder() {
         info = new PageInfo<>();
     }
     
@@ -29,10 +27,8 @@ public class PageBuilder<E>
      * @param page
      * @return
      */
-    public PageBuilder<E> buildAttribute(Object page)
-    {
-        if (!(page instanceof Page))
-        {
+    public PageBuilder<E> buildAttribute(Object page) {
+        if (!(page instanceof Page)) {
             throw new InfrastructureException("非分页数据类型");
         }
         info.init(page);
@@ -44,8 +40,7 @@ public class PageBuilder<E>
      * @param collection
      * @return
      */
-    public PageBuilder<E> buildData(Collection<E> collection)
-    {
+    public PageBuilder<E> buildData(Collection<E> collection) {
         // 设置数据
         info.setSize(collection.size());
         info.getDataList().addAll(collection);
@@ -59,31 +54,26 @@ public class PageBuilder<E>
      * 取回构建分页数据信息
      * @return
      */
-    public PageInfo<E> retrieve()
-    {
+    public PageInfo<E> retrieve() {
         return this.getInfo();
     }
     
-    private PageInfo<E> getInfo()
-    {
+    private PageInfo<E> getInfo() {
         return info;
     }
     
     /**
      * 计算行号
      */
-    private void calcRow()
-    {
+    private void calcRow() {
         /*
          * 计算在数据库中的行号
          */
-        if (info.getSize() == 0)
-        {
+        if (info.getSize() == 0) {
             info.setStartRow(0);
             info.setEndRow(0);
         }
-        else
-        {
+        else {
             //由于结果是>startRow的，所以实际的需要+1
             info.setStartRow(info.getStartRow() + 1);
             //计算实际的endRow（最后一页的时候特殊）
@@ -96,8 +86,7 @@ public class PageBuilder<E>
      * @param info
      * @return
      */
-    public static <F> PageInfo<F> buildPageInfo(PageInfo<?> info)
-    {
+    public static <F> PageInfo<F> buildPageInfo(PageInfo<?> info) {
         PageInfo<F> copy = new PageInfo<>();
         copy.setEndRow(info.getEndRow());
         //copy.setFirstPage(info.getf);

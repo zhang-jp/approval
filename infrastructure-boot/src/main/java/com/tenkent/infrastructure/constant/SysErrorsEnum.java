@@ -2,33 +2,40 @@ package com.tenkent.infrastructure.constant;
 
 /**
  * 系统错误码信息
- * @author  qinzhengliang
- * @version  [版本号, 2017年4月14日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public enum SysErrorsEnum
-{
+public enum SysErrorsEnum {
     //系统异常
     SYS_ERROE("10000001", "系统异常"),
+    
     //参数错误
     SYS_PARAM_ERROE("10000002", "参数错误"),
+    
     //没有数据
     SYS_NODATA_ERROE("10000003", "没有数据"),
+    
     //授权错误
     SYS_AUTH_ERROR("10000004", "授权错误"),
+    
     // 白名单错误
     SYS_WHITELIST_ERROR("10000005", "不在白名单内"),
+    
     //签名错误
     SYS_SIGN_ERROE("10000006", "消息错误"),
+    
     //网络异常
     SYS_NETWORK_ERROR("10000007", "网络异常"),
+    
     //操作异常
     SYS_OPERATE_ERROE("10000008", "操作异常"),
+    
     //数据库操作异常
     SYS_DATABASE_ERROE("10000009", "数据库操作异常"),
+    
     //基础框架异常
     SYS_INFRASTRUCTURE_ERROE("10000010", "基础框架异常"),
+    
     // 接口没有授权
     SYS_NO_INTERFACE_AUTH_ERROR("10000011", "没有操作权限"),
     
@@ -52,24 +59,20 @@ public enum SysErrorsEnum
     
     private String info;
     
-    private SysErrorsEnum(String code, String info)
-    {
+    private SysErrorsEnum(String code, String info) {
         this.code = code;
         this.info = info;
     }
     
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
     
-    public String getInfo()
-    {
+    public String getInfo() {
         return info;
     }
     
-    public String errToString()
-    {
+    public String errToString() {
         return code + ":" + info;
     }
 }

@@ -36,18 +36,14 @@ import com.tenkent.infrastructure.utility.MapUtility;
 /**
  * EXCEL导出
  * 
- * @author  秦正亮
- * @version  [版本号, 2016年11月21日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class ExcelExportUtil
-{
+public class ExcelExportUtil {
     /**
      * 私有构造函数
      */
-    private ExcelExportUtil()
-    {
+    private ExcelExportUtil() {
     }
     
     /**
@@ -61,22 +57,18 @@ public class ExcelExportUtil
      * @param res
      * @see [类、类#方法、类#成员]
      */
-    public static void buildXSLXExcel(List<Map<String, Object>> listValues, String fileName, String sheetName,
-        String[] cellTitle, String[] cellValue, HttpServletResponse res)
-    {
+    public static void buildXSLXExcel(List<Map<String, Object>> listValues, String fileName, String sheetName, String[] cellTitle,
+        String[] cellValue, HttpServletResponse res) {
         byte[] bytes = buildXSLXExcelWithSheetName(listValues, sheetName, cellTitle, cellValue);
-        if (0 == bytes.length)
-        {
+        if (0 == bytes.length) {
             return;
         }
         writeDocResponse(res, bytes, fileName);
     }
     
-    public static void buildXSLXExcel(ExcelParam<ExportTypeUtility> data, HttpServletResponse res)
-    {
+    public static void buildXSLXExcel(ExcelParam<ExportTypeUtility> data, HttpServletResponse res) {
         byte[] bytes = buildXSLXExcelWithSpecialColumn(data);
-        if (0 == bytes.length)
-        {
+        if (0 == bytes.length) {
             return;
         }
         writeDocResponse(res, bytes, data.getFileName());
@@ -88,22 +80,16 @@ public class ExcelExportUtil
      * @return
      * @see [类、类#方法、类#成员]
      */
-    public static byte[] buildXSLXExcelWithSpecialColumn(ExcelParam<ExportTypeUtility> data)
-    {
+    public static byte[] buildXSLXExcelWithSpecialColumn(ExcelParam<ExportTypeUtility> data) {
         try (
-            XSSFWorkbook workBook = createExcelBook(data.getListValues(),
-                data.getFileName(),
-                data.getCellTitle(),
-                data.getCellValue(),
-                data.getSpecialColumns());
-            ByteArrayOutputStream outStream = new ByteArrayOutputStream();)
-        {
+            XSSFWorkbook workBook = createExcelBook(data
+                .getListValues(), data.getFileName(), data.getCellTitle(), data.getCellValue(), data.getSpecialColumns());
+            ByteArrayOutputStream outStream = new ByteArrayOutputStream();) {
             workBook.write(outStream);
             outStream.flush();
             return outStream.toByteArray();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(ExcelExportUtil.class, e, "文件导出发生异常！");
             return new byte[0];
         }
@@ -120,18 +106,15 @@ public class ExcelExportUtil
      * @param cellValue
      * @see [类、类#方法、类#成员]
      */
-    public static byte[] buildXSLXExcelWithSheetName(List<Map<String, Object>> listValues, String sheetName,
-        String[] cellTitle, String[] cellValue)
-    {
+    public static byte[] buildXSLXExcelWithSheetName(List<Map<String, Object>> listValues, String sheetName, String[] cellTitle,
+        String[] cellValue) {
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-            XSSFWorkbook workBook = createExcelBook(listValues, sheetName, cellTitle, cellValue, null);)
-        {
+            XSSFWorkbook workBook = createExcelBook(listValues, sheetName, cellTitle, cellValue, null);) {
             workBook.write(outStream);
             outStream.flush();
             return outStream.toByteArray();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(ExcelExportUtil.class, e, "文件导出发生异常！");
             return new byte[0];
         }
@@ -147,9 +130,8 @@ public class ExcelExportUtil
      * @return
      * @see [类、类#方法、类#成员]
      */
-    private static XSSFWorkbook createExcelBook(List<Map<String, Object>> listValues, String sheetName,
-        String[] cellTitle, String[] cellValue, Map<Integer, ExportTypeUtility> specialColumns)
-    {
+    private static XSSFWorkbook createExcelBook(List<Map<String, Object>> listValues, String sheetName, String[] cellTitle,
+        String[] cellValue, Map<Integer, ExportTypeUtility> specialColumns) {
         //创建工作薄
         XSSFWorkbook workBook = new XSSFWorkbook();
         XSSFSheet sheet = workBook.createSheet();
@@ -170,8 +152,7 @@ public class ExcelExportUtil
         
         //创建第一行标题
         XSSFRow titleRow = sheet.createRow((short)0);
-        for (int i = 0; i < cellTitle.length; i++)
-        {
+        for (int i = 0; i < cellTitle.length; i++) {
             //创建第1行标题单元格
             sheet.setColumnWidth(i, 20 * 256);
             XSSFCell cell = titleRow.createCell(i, 0);
@@ -181,13 +162,11 @@ public class ExcelExportUtil
         }
         
         //第二行开始写入数据
-        if (CollectionUtility.isNotEmpty(listValues))
-        {
+        if (CollectionUtility.isNotEmpty(listValues)) {
             //创建格式
             XSSFCellStyle style = workBook.createCellStyle();
             //遍历列表数据
-            for (int i = 0; i < listValues.size(); i++)
-            {
+            for (int i = 0; i < listValues.size(); i++) {
                 XSSFRow row = sheet.createRow((short)i + 1);
                 setRow(cellTitle, cellValue, specialColumns, workBook, sheet, style, listValues.get(i), i, row);
             }
@@ -196,19 +175,15 @@ public class ExcelExportUtil
     }
     
     private static void setRow(String[] cellTitle, String[] cellValue, Map<Integer, ExportTypeUtility> specialColumns,
-        XSSFWorkbook workBook, XSSFSheet sheet, XSSFCellStyle style, Map<String, Object> map, int line, XSSFRow row)
-    {
+        XSSFWorkbook workBook, XSSFSheet sheet, XSSFCellStyle style, Map<String, Object> map, int line, XSSFRow row) {
         ExportTypeUtility exportTypeUtility;
-        for (int j = 0; j < cellTitle.length; j++)
-        {
-            if (MapUtility.isNotEmpty(specialColumns) && specialColumns.containsKey(j))
-            {
+        for (int j = 0; j < cellTitle.length; j++) {
+            if (MapUtility.isNotEmpty(specialColumns) && specialColumns.containsKey(j)) {
                 row.setHeight((short)2000);
                 exportTypeUtility = specialColumns.get(j);
                 exportTypeUtility.generateColumn(workBook, sheet, line, j, MapUtility.getMapString(map, cellValue[j]));
             }
-            else
-            {
+            else {
                 // 在上面行索引0的位置创建单元格
                 XSSFCell cell = row.createCell(j, 0);
                 // 定义单元格为字符串类型
@@ -229,22 +204,18 @@ public class ExcelExportUtil
      * @throws IOException
      * @see [类、类#方法、类#成员]
      */
-    public static void copyFile(String fromPath, String toPath)
-    {
+    public static void copyFile(String fromPath, String toPath) {
         try (FileInputStream fis = new FileInputStream(fromPath);
             BufferedInputStream bufis = new BufferedInputStream(fis);
             
             FileOutputStream fos = new FileOutputStream(toPath);
-            BufferedOutputStream bufos = new BufferedOutputStream(fos);)
-        {
+            BufferedOutputStream bufos = new BufferedOutputStream(fos);) {
             int len = 0;
-            while ((len = bufis.read()) != -1)
-            {
+            while ((len = bufis.read()) != -1) {
                 bufos.write(len);
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(ExcelExportUtil.class, e, "文件移动异常！");
         }
     }
@@ -257,43 +228,35 @@ public class ExcelExportUtil
      * @return
      * @see [类、类#方法、类#成员]
      */
-    public static String compressFolder(String folderPath, String zipFileName)
-    {
-        String zipFilePath =
-            folderPath.substring(0, folderPath.substring(0, folderPath.length() - 1).lastIndexOf('/') + 1);
+    public static String compressFolder(String folderPath, String zipFileName) {
+        String zipFilePath = folderPath.substring(0, folderPath.substring(0, folderPath.length() - 1).lastIndexOf('/') + 1);
         File zipFile = new File(zipFilePath + zipFileName + ".zip");
         
         try (ZipArchiveOutputStream zipOutput = (ZipArchiveOutputStream)new ArchiveStreamFactory()
-            .createArchiveOutputStream(ArchiveStreamFactory.ZIP, new FileOutputStream(zipFile)))
-        {
+            .createArchiveOutputStream(ArchiveStreamFactory.ZIP, new FileOutputStream(zipFile))) {
             zipOutput.setEncoding("UTF-8");
             zipOutput.setUseZip64(Zip64Mode.AsNeeded);
             File[] files = new File(folderPath).listFiles();
-            for (File file : files)
-            {
+            for (File file : files) {
                 zipPutEntry(zipOutput, file);
             }
             zipOutput.finish();
             zipOutput.close();
             return zipFile.getPath();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException("compress folder exception", e);
         }
     }
     
-    private static void zipPutEntry(ZipArchiveOutputStream zipOutput, File file)
-    {
-        try (InputStream in = new FileInputStream(file);)
-        {
+    private static void zipPutEntry(ZipArchiveOutputStream zipOutput, File file) {
+        try (InputStream in = new FileInputStream(file);) {
             ZipArchiveEntry entry = new ZipArchiveEntry(file, file.getName());
             zipOutput.putArchiveEntry(entry);
             IOUtils.copy(in, zipOutput);
             zipOutput.closeArchiveEntry();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException("compress folder exception", e);
         }
     }
@@ -306,10 +269,8 @@ public class ExcelExportUtil
      * @param fileName
      * @see [类、类#方法、类#成员]
      */
-    public static void writeDocResponse(HttpServletResponse rsp, byte[] bytes, String fileName)
-    {
-        try (OutputStream out = rsp.getOutputStream();)
-        {
+    public static void writeDocResponse(HttpServletResponse rsp, byte[] bytes, String fileName) {
+        try (OutputStream out = rsp.getOutputStream();) {
             //扩展名获取ContentType
             rsp.setContentType("application/vnd.ms-excel");
             String contentHeader = "attachment; filename=\"" + fileName + "\"";
@@ -317,8 +278,7 @@ public class ExcelExportUtil
             //文件写入
             out.write(bytes, 0, bytes.length);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             LoggerManager.error(ExcelExportUtil.class, e, "文件写入流发生异常！");
         }
     }
@@ -330,14 +290,11 @@ public class ExcelExportUtil
      *            文件名
      * @return 文档扩展名
      */
-    public static String getFileExt(String fileName)
-    {
-        if (StringUtils.isEmpty(fileName))
-        {
+    public static String getFileExt(String fileName) {
+        if (StringUtils.isEmpty(fileName)) {
             return StringUtils.EMPTY;
         }
-        else
-        {
+        else {
             return StringUtils.substringAfterLast(fileName, ".");
         }
     }
@@ -350,35 +307,27 @@ public class ExcelExportUtil
      * @return 文档类型
      * @throws Exception
      */
-    public static String getDocContentType(String fileExt)
-    {
+    public static String getDocContentType(String fileExt) {
         String contentType = StringUtils.EMPTY;
-        if ("doc".equals(fileExt))
-        {
+        if ("doc".equals(fileExt)) {
             contentType = "application/msword";
         }
-        else if ("xls".equals(fileExt))
-        {
+        else if ("xls".equals(fileExt)) {
             contentType = "application/vnd.ms-excel";
         }
-        else if ("pdf".equals(fileExt))
-        {
+        else if ("pdf".equals(fileExt)) {
             contentType = "application/pdf";
         }
-        else if ("jpg".equals(fileExt))
-        {
+        else if ("jpg".equals(fileExt)) {
             contentType = "image/jpeg";
         }
-        else if ("gif".equals(fileExt))
-        {
+        else if ("gif".equals(fileExt)) {
             contentType = "image/gif";
         }
-        else if ("bmp".equals(fileExt))
-        {
+        else if ("bmp".equals(fileExt)) {
             contentType = "image/bmp";
         }
-        else if ("txt".equals(fileExt))
-        {
+        else if ("txt".equals(fileExt)) {
             contentType = "text/plain";
         }
         return contentType;

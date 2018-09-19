@@ -5,8 +5,7 @@ import java.util.Map;
 
 import com.tenkent.infrastructure.utility.MapUtility;
 
-public abstract class ExcelParam<T>
-{
+public abstract class ExcelParam<T> {
     /**
      * excel文件名
      */
@@ -34,63 +33,51 @@ public abstract class ExcelParam<T>
     
     private Map<Integer, T> specialColumns;
     
-    public String getFileName()
-    {
+    public String getFileName() {
         return fileName;
     }
     
-    public void setFileName(String fileName)
-    {
+    public void setFileName(String fileName) {
         this.fileName = fileName;
     }
     
-    public String getSheetName()
-    {
+    public String getSheetName() {
         return sheetName;
     }
     
-    public void setSheetName(String sheetName)
-    {
+    public void setSheetName(String sheetName) {
         this.sheetName = sheetName;
     }
     
-    public String[] getCellTitle()
-    {
+    public String[] getCellTitle() {
         return cellTitle;
     }
     
-    public void setCellTitle(String[] cellTitle)
-    {
+    public void setCellTitle(String[] cellTitle) {
         this.cellTitle = cellTitle;
     }
     
-    public List<Map<String, Object>> getListValues()
-    {
+    public List<Map<String, Object>> getListValues() {
         return listValues;
     }
     
-    public void setListValues(List<Map<String, Object>> listValues)
-    {
+    public void setListValues(List<Map<String, Object>> listValues) {
         this.listValues = listValues;
     }
     
-    public String[] getCellValue()
-    {
+    public String[] getCellValue() {
         return cellValue;
     }
     
-    public void setCellValue(String[] cellValue)
-    {
+    public void setCellValue(String[] cellValue) {
         this.cellValue = cellValue;
     }
     
-    public Map<Integer, T> getSpecialColumns()
-    {
+    public Map<Integer, T> getSpecialColumns() {
         return MapUtility.isEmpty(specialColumns) ? formSpecialColumns() : specialColumns;
     }
     
-    public void setSpecialColumns(Map<Integer, T> specialColumns)
-    {
+    public void setSpecialColumns(Map<Integer, T> specialColumns) {
         this.specialColumns = specialColumns;
     }
     

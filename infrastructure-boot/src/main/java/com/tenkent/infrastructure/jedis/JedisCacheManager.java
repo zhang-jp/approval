@@ -12,11 +12,11 @@ import redis.clients.jedis.Pipeline;
 
 /**
  * jedis操作类
- * @author  qinzhengliang
- * @version  [版本号, 2017年12月14日]
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class JedisCacheManager
-{
+public class JedisCacheManager {
     /**
      * redis过期时间单位为秒
      * 默认为不过期
@@ -30,13 +30,11 @@ public class JedisCacheManager
      */
     private JedisPool jedisPool;
     
-    public JedisCacheManager(JedisPool jedisPool)
-    {
+    public JedisCacheManager(JedisPool jedisPool) {
         this(jedisPool, 0);
     }
     
-    public JedisCacheManager(JedisPool jedisPool, int expire)
-    {
+    public JedisCacheManager(JedisPool jedisPool, int expire) {
         this.expire = expire;
         this.jedisPool = jedisPool;
     }
@@ -49,10 +47,8 @@ public class JedisCacheManager
      * @param value
      *            键值
      */
-    public void lpush(byte[] key, byte[] value)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public void lpush(byte[] key, byte[] value) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.lpush(key, value);
         }
     }
@@ -65,13 +61,10 @@ public class JedisCacheManager
      * @param value
      *            键值
      */
-    public void lpushPipeline(byte[] key, List<byte[]> values)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public void lpushPipeline(byte[] key, List<byte[]> values) {
+        try (Jedis jedis = jedisPool.getResource()) {
             Pipeline pl = jedis.pipelined();
-            for (byte[] bs : values)
-            {
+            for (byte[] bs : values) {
                 pl.lpush(key, bs);
             }
             pl.sync();
@@ -86,10 +79,8 @@ public class JedisCacheManager
      * @param value
      *            键值
      */
-    public void rpush(byte[] key, byte[] value)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public void rpush(byte[] key, byte[] value) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.rpush(key, value);
         }
     }
@@ -102,10 +93,8 @@ public class JedisCacheManager
      * @param destination
      *            键值
      */
-    public void rpoplpush(byte[] key, byte[] destination)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public void rpoplpush(byte[] key, byte[] destination) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.rpoplpush(key, destination);
         }
     }
@@ -117,11 +106,9 @@ public class JedisCacheManager
      *            键名
      * @return
      */
-    public List<byte[]> lpopList(byte[] key)
-    {
+    public List<byte[]> lpopList(byte[] key) {
         List<byte[]> list = null;
-        try (Jedis jedis = jedisPool.getResource())
-        {
+        try (Jedis jedis = jedisPool.getResource()) {
             list = jedis.lrange(key, 0, -1);
         }
         return list;
@@ -136,14 +123,11 @@ public class JedisCacheManager
      *            数量
      * @return
      */
-    public List<Object> rpopPipeline(byte[] key, int quantity)
-    {
+    public List<Object> rpopPipeline(byte[] key, int quantity) {
         List<Object> list = null;
-        try (Jedis jedis = jedisPool.getResource())
-        {
+        try (Jedis jedis = jedisPool.getResource()) {
             Pipeline pl = jedis.pipelined();
-            for (int i = 0; i < quantity; i++)
-            {
+            for (int i = 0; i < quantity; i++) {
                 pl.rpop(key);
             }
             list = pl.syncAndReturnAll();
@@ -158,12 +142,10 @@ public class JedisCacheManager
      *            键名
      * @return
      */
-    public byte[] rpop(byte[] key)
-    {
+    public byte[] rpop(byte[] key) {
         
         byte[] bytes = null;
-        try (Jedis jedis = jedisPool.getResource())
-        {
+        try (Jedis jedis = jedisPool.getResource()) {
             bytes = jedis.rpop(key);
         }
         return bytes;
@@ -175,12 +157,10 @@ public class JedisCacheManager
      * @param key
      * @return
      */
-    public byte[] get(byte[] key)
-    {
+    public byte[] get(byte[] key) {
         byte[] value = null;
         
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+        try (Jedis jedis = jedisPool.getResource();) {
             value = jedis.get(key);
         }
         
@@ -193,11 +173,9 @@ public class JedisCacheManager
      * @param key
      * @return
      */
-    public String get(String key)
-    {
+    public String get(String key) {
         String value;
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+        try (Jedis jedis = jedisPool.getResource();) {
             value = jedis.get(key);
         }
         
@@ -211,13 +189,10 @@ public class JedisCacheManager
      * @param value
      * @return
      */
-    public byte[] set(byte[] key, byte[] value)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public byte[] set(byte[] key, byte[] value) {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.set(key, value);
-            if (this.expire != 0)
-            {
+            if (this.expire != 0) {
                 jedis.expire(key, this.expire);
             }
         }
@@ -232,13 +207,10 @@ public class JedisCacheManager
      * @param value
      * @return
      */
-    public String set(String key, String value)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public String set(String key, String value) {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.set(key, value);
-            if (this.expire != 0)
-            {
+            if (this.expire != 0) {
                 jedis.expire(key, this.expire);
             }
         }
@@ -253,10 +225,8 @@ public class JedisCacheManager
      * @param expire
      * @return
      */
-    public byte[] set(byte[] key, byte[] value, int expire)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public byte[] set(byte[] key, byte[] value, int expire) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.setex(key, expire, value);
         }
         return value;
@@ -270,10 +240,8 @@ public class JedisCacheManager
      * @param expire
      * @return
      */
-    public String set(String key, String value, int expire)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public String set(String key, String value, int expire) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.setex(key, expire, value);
         }
         return value;
@@ -284,10 +252,8 @@ public class JedisCacheManager
      *
      * @param key
      */
-    public void del(byte[] key)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public void del(byte[] key) {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.del(key);
         }
     }
@@ -295,10 +261,8 @@ public class JedisCacheManager
     /*
      * 删除redis中指定key的缓存，key以字符串方式提供
      */
-    public void del(String key)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public void del(String key) {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.del(key);
         }
     }
@@ -308,20 +272,17 @@ public class JedisCacheManager
      *
      * @param keySet
      */
-    public void delKeySet(Set<byte[]> keySet)
-    {
+    public void delKeySet(Set<byte[]> keySet) {
         byte[][] keys = new byte[keySet.size()][];
         
         int keyIndex = 0;
         Iterator<byte[]> it = keySet.iterator();
-        while (it.hasNext())
-        {
+        while (it.hasNext()) {
             keys[keyIndex] = it.next();
             keyIndex++;
         }
         
-        try (Jedis jedis = jedisPool.getResource())
-        {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.del(keys);
         }
     }
@@ -329,10 +290,8 @@ public class JedisCacheManager
     /**
      * 删除redis当前DB中所有的key,谨慎使用
      */
-    public void flushDB()
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public void flushDB() {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.flushDB();
         }
     }
@@ -340,20 +299,16 @@ public class JedisCacheManager
     /**
      * 获取当前DB中所有key的数量
      */
-    public Long dbSize()
-    {
+    public Long dbSize() {
         Long dbSize = 0L;
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+        try (Jedis jedis = jedisPool.getResource();) {
             dbSize = jedis.dbSize();
         }
         return dbSize;
     }
     
-    public boolean exists(String key)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public boolean exists(String key) {
+        try (Jedis jedis = jedisPool.getResource();) {
             return jedis.exists(key);
         }
     }
@@ -364,11 +319,9 @@ public class JedisCacheManager
      * @param
      * @return
      */
-    public Set<byte[]> keys(String pattern)
-    {
+    public Set<byte[]> keys(String pattern) {
         Set<byte[]> keys = null;
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+        try (Jedis jedis = jedisPool.getResource();) {
             keys = jedis.keys(pattern.getBytes(Charset.forName("UTF-8")));
         }
         return keys;
@@ -378,10 +331,8 @@ public class JedisCacheManager
      * 当指定的key不存在，则设置key的值为value，如果存在则不设置
      * 如果设置成功返回1，如果没有设置返回0
      */
-    public long setnx(String key, String value)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public long setnx(String key, String value) {
+        try (Jedis jedis = jedisPool.getResource();) {
             long result = jedis.setnx(key, value);
             return result;
         }
@@ -391,10 +342,8 @@ public class JedisCacheManager
      * 给指定的key设置值为value并返回设置之前的值，此操作为原子操作，线程安全
      *
      */
-    public String getSet(String key, String value)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public String getSet(String key, String value) {
+        try (Jedis jedis = jedisPool.getResource();) {
             String result = jedis.getSet(key, value);
             return result;
         }
@@ -403,10 +352,8 @@ public class JedisCacheManager
     /*
      * 删除当前redis所有DB中的所有key，谨慎使用
      */
-    public String flushAll()
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public String flushAll() {
+        try (Jedis jedis = jedisPool.getResource();) {
             String result = jedis.flushAll();
             return result;
         }
@@ -419,10 +366,8 @@ public class JedisCacheManager
      * @param expire
      * @return 设置后过期时间
      */
-    public Long expire(byte[] key, int expire)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public Long expire(byte[] key, int expire) {
+        try (Jedis jedis = jedisPool.getResource();) {
             Long result = jedis.expire(key, expire);
             return result;
         }
@@ -435,10 +380,8 @@ public class JedisCacheManager
      * @param expire
      * @return 设置后过期时间
      */
-    public Long expire(String key, int expire)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public Long expire(String key, int expire) {
+        try (Jedis jedis = jedisPool.getResource();) {
             Long result = jedis.expire(key, expire);
             return result;
         }
@@ -450,10 +393,8 @@ public class JedisCacheManager
      * @param channels
      * @see [类、类#方法、类#成员]
      */
-    public void subscribe(JedisPubSub jedisPubSub, String... channels)
-    {
-        try (Jedis jedis = jedisPool.getResource())
-        {
+    public void subscribe(JedisPubSub jedisPubSub, String... channels) {
+        try (Jedis jedis = jedisPool.getResource()) {
             jedis.subscribe(jedisPubSub, channels);
         }
     }
@@ -464,10 +405,8 @@ public class JedisCacheManager
      * @param msg
      * @see [类、类#方法、类#成员]
      */
-    public void publish(String channel, String msg)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public void publish(String channel, String msg) {
+        try (Jedis jedis = jedisPool.getResource();) {
             jedis.publish(channel, msg);
         }
     }
@@ -478,10 +417,8 @@ public class JedisCacheManager
      * @param key
      * @return
      */
-    public long incr(String key)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public long incr(String key) {
+        try (Jedis jedis = jedisPool.getResource();) {
             Long result = jedis.incr(key);
             return result;
         }
@@ -493,10 +430,8 @@ public class JedisCacheManager
      * @param key
      * @return
      */
-    public long decr(String key)
-    {
-        try (Jedis jedis = jedisPool.getResource();)
-        {
+    public long decr(String key) {
+        try (Jedis jedis = jedisPool.getResource();) {
             Long result = jedis.decr(key);
             return result;
         }
@@ -508,8 +443,7 @@ public class JedisCacheManager
      * 0 - never expire
      * @return
      */
-    public int getExpire()
-    {
+    public int getExpire() {
         return expire;
     }
     
@@ -519,8 +453,7 @@ public class JedisCacheManager
      * 0 - never expire
      * @param expire
      */
-    public void setExpire(int expire)
-    {
+    public void setExpire(int expire) {
         this.expire = expire;
     }
     
@@ -529,8 +462,7 @@ public class JedisCacheManager
      * 通过配置注入
      * @return
      */
-    public JedisPool getJedisPool()
-    {
+    public JedisPool getJedisPool() {
         return this.jedisPool;
     }
     
@@ -539,8 +471,7 @@ public class JedisCacheManager
      * 通过配置注入
      * @param jedisPool
      */
-    public void setJedisPool(JedisPool jedisPool)
-    {
+    public void setJedisPool(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
     }
 }

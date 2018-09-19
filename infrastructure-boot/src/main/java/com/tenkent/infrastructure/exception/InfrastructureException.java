@@ -6,40 +6,32 @@ import com.tenkent.infrastructure.utility.StringUtility;
 /**
  * 框架层异常
  * 
- * @author  qinzhengliang
- * @version  [版本号, 2017年3月29日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class InfrastructureException extends BaseRuntimeException
-{
+public class InfrastructureException extends BaseRuntimeException {
     /**
      * 注释内容
      */
     private static final long serialVersionUID = 1L;
     
-    public InfrastructureException(String message)
-    {
+    public InfrastructureException(String message) {
         super(SysErrorsEnum.SYS_INFRASTRUCTURE_ERROE.getCode(), message);
     }
     
-    public InfrastructureException(String code, String message)
-    {
+    public InfrastructureException(String code, String message) {
         super(code, message);
     }
     
-    public InfrastructureException(String messageTemplate, Object... params)
-    {
+    public InfrastructureException(String messageTemplate, Object... params) {
         super(SysErrorsEnum.SYS_INFRASTRUCTURE_ERROE.getCode(), StringUtility.format(messageTemplate, params));
     }
     
-    public InfrastructureException(Throwable cause, String message)
-    {
+    public InfrastructureException(Throwable cause, String message) {
         super(SysErrorsEnum.SYS_INFRASTRUCTURE_ERROE.getCode(), message, cause);
     }
     
-    public InfrastructureException(Throwable cause, String messageTemplate, Object... params)
-    {
+    public InfrastructureException(Throwable cause, String messageTemplate, Object... params) {
         super(SysErrorsEnum.SYS_INFRASTRUCTURE_ERROE.getCode(), StringUtility.format(messageTemplate, params), cause);
     }
 }

@@ -3,8 +3,7 @@ package com.tenkent.infrastructure.utility.excel;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public abstract class ExportTypeUtility
-{
+public abstract class ExportTypeUtility {
     /**
      * 生成单元格内容
      * 

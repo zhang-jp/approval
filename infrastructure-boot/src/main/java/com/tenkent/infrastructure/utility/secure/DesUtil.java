@@ -10,12 +10,10 @@ import javax.crypto.spec.DESKeySpec;
 
 import com.tenkent.infrastructure.exception.InfrastructureException;
 
-public class DesUtil
-{
+public class DesUtil {
     private static final String DES = "DES";
     
-    private DesUtil()
-    {
+    private DesUtil() {
     }
     
     /**
@@ -24,15 +22,12 @@ public class DesUtil
      * @param key  加密键byte数组
      * @return
      */
-    public static String encrypt(String data, String key)
-    {
-        try
-        {
+    public static String encrypt(String data, String key) {
+        try {
             byte[] bt = encrypt(data.getBytes(), key.getBytes());
             return Base64.getEncoder().encodeToString(bt);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException(e, "des encrypt error");
         }
     }
@@ -43,18 +38,15 @@ public class DesUtil
      * @param key  加密键byte数组
      * @return
      */
-    public static String decrypt(String data, String key)
-    {
-        try
-        {
+    public static String decrypt(String data, String key) {
+        try {
             if (data == null)
                 return null;
             byte[] buf = Base64.getDecoder().decode(data);
             byte[] bt = decrypt(buf, key.getBytes());
             return new String(bt);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException(e, "des decrypt error");
         }
     }
@@ -65,10 +57,8 @@ public class DesUtil
      * @param key  加密键byte数组
      * @return
      */
-    private static byte[] encrypt(byte[] data, byte[] key)
-    {
-        try
-        {
+    private static byte[] encrypt(byte[] data, byte[] key) {
+        try {
             // 生成一个可信任的随机数源
             SecureRandom sr = new SecureRandom();
             
@@ -87,8 +77,7 @@ public class DesUtil
             
             return cipher.doFinal(data);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException(e, "des decrypt error");
         }
     }
@@ -100,10 +89,8 @@ public class DesUtil
      * @return
      * @throws Exception
      */
-    private static byte[] decrypt(byte[] data, byte[] key)
-    {
-        try
-        {
+    private static byte[] decrypt(byte[] data, byte[] key) {
+        try {
             // 生成一个可信任的随机数源
             SecureRandom sr = new SecureRandom();
             
@@ -122,8 +109,7 @@ public class DesUtil
             
             return cipher.doFinal(data);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             throw new InfrastructureException(e, "des decrypt error");
         }
     }

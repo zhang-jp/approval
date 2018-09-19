@@ -5,12 +5,11 @@ import java.util.Map;
 
 /**
  * 分页查询条件
- * @author  qinzhengliang
- * @version  [版本号, 2018年5月30日]
- * @param <T>
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class PageCondition<T extends CustomInfo>
-{
+public class PageCondition<T extends CustomInfo> {
     /**
      * 当前页
      */
@@ -31,43 +30,35 @@ public class PageCondition<T extends CustomInfo>
      */
     private T customInfo;
     
-    public int getPageNum()
-    {
+    public int getPageNum() {
         return pageNum;
     }
     
-    public void setPageNum(int pageNum)
-    {
+    public void setPageNum(int pageNum) {
         this.pageNum = pageNum;
     }
     
-    public int getPageSize()
-    {
+    public int getPageSize() {
         return pageSize;
     }
     
-    public void setPageSize(int pageSize)
-    {
+    public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
     
-    public String getOrderBy()
-    {
+    public String getOrderBy() {
         return orderBy;
     }
     
-    public void setOrderBy(String orderBy)
-    {
+    public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
     }
     
-    public T getCustomInfo()
-    {
+    public T getCustomInfo() {
         return customInfo;
     }
     
-    public void setCustomInfo(T customInfo)
-    {
+    public void setCustomInfo(T customInfo) {
         this.customInfo = customInfo;
     }
     
@@ -75,10 +66,8 @@ public class PageCondition<T extends CustomInfo>
      * 获取查询条件
      * @return
      */
-    public Map<String, Object> getCustomMap()
-    {
-        if (null == customInfo)
-        {
+    public Map<String, Object> getCustomMap() {
+        if (null == customInfo) {
             return new HashMap<>();
         }
         return customInfo.getCustomMap();

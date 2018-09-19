@@ -1,10 +1,11 @@
 package com.tenkent.infrastructure.constant;
 
 /**
- * Created by 10115916 on 2016/7/15 0015.
+ * 全局静态常量
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class GlobalConstant
-{
+public class GlobalConstant {
     public static final byte ENABLED_FLAG = 1;
     
     public static final byte DISABLED_FLAG = 0;

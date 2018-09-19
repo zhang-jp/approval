@@ -1,7 +1,11 @@
 package com.tenkent.infrastructure.constant;
 
-public interface CharacterConstant
-{
+/**
+ * 符号常量
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
+ */
+public interface CharacterConstant {
     /**
      * 空格
      */

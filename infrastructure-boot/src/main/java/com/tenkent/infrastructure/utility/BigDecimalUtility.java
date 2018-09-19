@@ -5,20 +5,16 @@ import java.math.BigDecimal;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class BigDecimalUtility
-{
-    public static boolean isLesserThan(BigDecimal a, BigDecimal b)
-    {
+public class BigDecimalUtility {
+    public static boolean isLesserThan(BigDecimal a, BigDecimal b) {
         return a.compareTo(b) == -1;
     }
     
-    public static boolean isLessThanOrEqual(BigDecimal a, BigDecimal b)
-    {
+    public static boolean isLessThanOrEqual(BigDecimal a, BigDecimal b) {
         return a.compareTo(b) <= 0;
     }
     
-    public static boolean isGreaterThan(BigDecimal a, BigDecimal b)
-    {
+    public static boolean isGreaterThan(BigDecimal a, BigDecimal b) {
         return a.compareTo(b) > 0;
     }
     
@@ -28,8 +24,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal add(BigDecimal a, BigDecimal b)
-    {
+    public static BigDecimal add(BigDecimal a, BigDecimal b) {
         a = null2Zero(a);
         b = null2Zero(b);
         return a.add(b);
@@ -41,8 +36,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal sub(BigDecimal a, BigDecimal b)
-    {
+    public static BigDecimal sub(BigDecimal a, BigDecimal b) {
         a = null2Zero(a);
         b = null2Zero(b);
         return a.subtract(b);
@@ -54,8 +48,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal mul(int a, BigDecimal b)
-    {
+    public static BigDecimal mul(int a, BigDecimal b) {
         return mul(new BigDecimal(a), b);
     }
     
@@ -65,8 +58,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal mul(String a, BigDecimal b)
-    {
+    public static BigDecimal mul(String a, BigDecimal b) {
         return mul(new BigDecimal(a), b);
     }
     
@@ -76,8 +68,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal mul(BigDecimal a, BigDecimal b)
-    {
+    public static BigDecimal mul(BigDecimal a, BigDecimal b) {
         a = null2Zero(a);
         b = null2Zero(b);
         return a.multiply(b);
@@ -89,8 +80,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal div(Integer a, Integer b)
-    {
+    public static BigDecimal div(Integer a, Integer b) {
         return div(new BigDecimal(a), new BigDecimal(b));
     }
     
@@ -100,8 +90,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal div(BigDecimal a, BigDecimal b)
-    {
+    public static BigDecimal div(BigDecimal a, BigDecimal b) {
         return div(a, b, 2);
     }
     
@@ -112,8 +101,7 @@ public class BigDecimalUtility
      * @param len
      * @return
      */
-    public static BigDecimal div(BigDecimal a, BigDecimal b, int len)
-    {
+    public static BigDecimal div(BigDecimal a, BigDecimal b, int len) {
         return a.divide(b, len, BigDecimal.ROUND_HALF_UP);
     }
     
@@ -123,8 +111,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal divDown(Integer a, Integer b)
-    {
+    public static BigDecimal divDown(Integer a, Integer b) {
         return divDown(new BigDecimal(a), new BigDecimal(b));
     }
     
@@ -134,8 +121,7 @@ public class BigDecimalUtility
      * @param b
      * @return
      */
-    public static BigDecimal divDown(BigDecimal a, BigDecimal b)
-    {
+    public static BigDecimal divDown(BigDecimal a, BigDecimal b) {
         return divHalfDown(a, b, 2);
     }
     
@@ -146,8 +132,7 @@ public class BigDecimalUtility
      * @param len
      * @return
      */
-    public static BigDecimal divHalfDown(BigDecimal a, BigDecimal b, int len)
-    {
+    public static BigDecimal divHalfDown(BigDecimal a, BigDecimal b, int len) {
         return a.divide(b, len, BigDecimal.ROUND_DOWN);
     }
     
@@ -156,13 +141,11 @@ public class BigDecimalUtility
      * @param arg
      * @return
      */
-    public static int roundUp(BigDecimal arg)
-    {
+    public static int roundUp(BigDecimal arg) {
         return roundUp(arg, 0).intValue();
     }
     
-    public static BigDecimal roundUp(BigDecimal arg, int len)
-    {
+    public static BigDecimal roundUp(BigDecimal arg, int len) {
         return arg.setScale(len, BigDecimal.ROUND_UP);
     }
     
@@ -171,8 +154,7 @@ public class BigDecimalUtility
      * @param argd
      * @return
      */
-    public static BigDecimal roundHalfUp(BigDecimal arg)
-    {
+    public static BigDecimal roundHalfUp(BigDecimal arg) {
         return roundHalfUp(arg, 2);
     }
     
@@ -182,13 +164,11 @@ public class BigDecimalUtility
      * @param len
      * @return
      */
-    public static BigDecimal roundHalfUp(BigDecimal arg, int len)
-    {
+    public static BigDecimal roundHalfUp(BigDecimal arg, int len) {
         return arg.setScale(len, BigDecimal.ROUND_HALF_UP);
     }
     
-    public static BigDecimal null2Zero(BigDecimal arg)
-    {
+    public static BigDecimal null2Zero(BigDecimal arg) {
         return arg == null ? BigDecimal.ZERO : arg;
     }
     
@@ -198,25 +178,20 @@ public class BigDecimalUtility
      * @param digit 位数
      * @return 是否是x位小数
      */
-    public static boolean isDigitDeceimal(String value, int digit)
-    {
-        if (StringUtility.isEmpty(value))
-        {
+    public static boolean isDigitDeceimal(String value, int digit) {
+        if (StringUtility.isEmpty(value)) {
             return false;
         }
         
         String[] arr = value.split("\\.");
-        if (ArrayUtils.isEmpty(arr) || arr.length > 2)
-        {
+        if (ArrayUtils.isEmpty(arr) || arr.length > 2) {
             return false;
         }
         
-        if (arr.length == 1)
-        {
+        if (arr.length == 1) {
             return NumberUtils.isNumber(arr[0]);
         }
-        else
-        {
+        else {
             return NumberUtils.isNumber(arr[0]) && NumberUtils.isNumber(arr[1]) && arr[1].length() <= digit;
         }
     }

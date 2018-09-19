@@ -10,18 +10,14 @@ package com.tenkent.infrastructure.utility;
 /**
  * 二进制工具类
  * 
- * @author  shiyajie
- * @version  [版本号, 2017年3月13日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class BinaryUtility
-{
+public class BinaryUtility {
     /** 
      * 私有函数
      */
-    private BinaryUtility()
-    {
+    private BinaryUtility() {
         
     }
     
@@ -32,8 +28,7 @@ public class BinaryUtility
      * @param figure 需要减去的位数
      * @return 减去后的数
      */
-    public static int minus(int sourceValue, int figure)
-    {
+    public static int minus(int sourceValue, int figure) {
         // 按位取2的n－1次方，得到要减去的数字
         int target = (int)Math.pow(2, figure - 1.0D);
         
@@ -51,8 +46,7 @@ public class BinaryUtility
      * @param bit 位
      * @return
      */
-    public static int getBit(int settings, int bit)
-    {
+    public static int getBit(int settings, int bit) {
         return (settings >> (bit - 1)) & 0x1;
     }
     
@@ -62,8 +56,7 @@ public class BinaryUtility
      * @param bit
      * @return
      */
-    public static int setBitOne(int settings, int bit)
-    {
+    public static int setBitOne(int settings, int bit) {
         return settings | (int)Math.pow(2, bit - 1);
     }
     
@@ -73,8 +66,7 @@ public class BinaryUtility
      * @param bit
      * @return
      */
-    public static int setBitZero(int settings, int bit)
-    {
+    public static int setBitZero(int settings, int bit) {
         return settings & ~(int)Math.pow(2, bit - 1);
     }
     

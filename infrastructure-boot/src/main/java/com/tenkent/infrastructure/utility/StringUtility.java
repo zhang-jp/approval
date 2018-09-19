@@ -15,15 +15,16 @@ import com.tenkent.infrastructure.exception.InfrastructureException;
 import com.tenkent.infrastructure.log.LoggerManager;
 
 /**
- * Created by 10115916 on 2016/7/15 0015.
+ * 字符串工具类
+ * 
+ * @author  zhangjiaping
+ * @version  [版本号, 2018年9月19日]
  */
-public class StringUtility
-{
+public class StringUtility {
     /**
      * 私有构造函数
      */
-    private StringUtility()
-    {
+    private StringUtility() {
     }
     
     /**
@@ -35,8 +36,7 @@ public class StringUtility
      * @param str 被检测的字符串
      * @return 是否为空
      */
-    public static boolean isBlank(String str)
-    {
+    public static boolean isBlank(String str) {
         return str == null || str.trim().length() == 0;
     }
     
@@ -49,8 +49,7 @@ public class StringUtility
      * @param str 被检测的字符串
      * @return 是否为非空
      */
-    public static boolean isNotBlank(String str)
-    {
+    public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }
     
@@ -60,17 +59,13 @@ public class StringUtility
      * @param strs 字符串列表
      * @return 是否包含空字符串
      */
-    public static boolean hasBlank(String... strs)
-    {
-        if (CollectionUtility.isEmpty(strs))
-        {
+    public static boolean hasBlank(String... strs) {
+        if (CollectionUtility.isEmpty(strs)) {
             return true;
         }
         
-        for (String str : strs)
-        {
-            if (isBlank(str))
-            {
+        for (String str : strs) {
+            if (isBlank(str)) {
                 return true;
             }
         }
@@ -84,8 +79,7 @@ public class StringUtility
      * @param str 被检测的字符串
      * @return 是否为空
      */
-    public static boolean isEmpty(String str)
-    {
+    public static boolean isEmpty(String str) {
         return str == null || str.trim().length() == 0;
     }
     
@@ -97,8 +91,7 @@ public class StringUtility
      * @param str 被检测的字符串
      * @return 是否为非空
      */
-    public static boolean isNotEmpty(String str)
-    {
+    public static boolean isNotEmpty(String str) {
         return !isEmpty(str);
     }
     
@@ -108,8 +101,7 @@ public class StringUtility
      * @param str 被转换的字符串
      * @return 转换后的字符串
      */
-    public static String nullToEmpty(String str)
-    {
+    public static String nullToEmpty(String str) {
         return str == null ? CharacterConstant.EMPTY : str;
     }
     
@@ -119,8 +111,7 @@ public class StringUtility
      * @param str 被转换的字符串
      * @return 转换后的字符串
      */
-    public static String emptyToNull(String str)
-    {
+    public static String emptyToNull(String str) {
         return isEmpty(str) ? null : str;
     }
     
@@ -130,12 +121,9 @@ public class StringUtility
      * @param strs 字符串列表
      * @return 是否包含空字符串
      */
-    public static boolean hasEmpty(String... strs)
-    {
-        for (String str : strs)
-        {
-            if (isEmpty(str))
-            {
+    public static boolean hasEmpty(String... strs) {
+        for (String str : strs) {
+            if (isEmpty(str)) {
                 return true;
             }
         }
@@ -148,8 +136,7 @@ public class StringUtility
      * @param str 字符串
      * @return 处理后的字符串
      */
-    public static String trim(String str)
-    {
+    public static String trim(String str) {
         return (null == str) ? null : str.trim();
     }
     
@@ -160,10 +147,8 @@ public class StringUtility
      * @param getOrSetMethodName
      * @return 如果是set或get方法名，返回field， 否则null
      */
-    public static String getGeneralField(String getOrSetMethodName)
-    {
-        if (getOrSetMethodName.startsWith("get") || getOrSetMethodName.startsWith("set"))
-        {
+    public static String getGeneralField(String getOrSetMethodName) {
+        if (getOrSetMethodName.startsWith("get") || getOrSetMethodName.startsWith("set")) {
             return cutPreAndLowerFirst(getOrSetMethodName, 3);
         }
         return null;
@@ -176,8 +161,7 @@ public class StringUtility
      * @param fieldName 属性名
      * @return setXxx
      */
-    public static String genSetter(String fieldName)
-    {
+    public static String genSetter(String fieldName) {
         return upperFirstAndAddPre(fieldName, "set");
     }
     
@@ -187,8 +171,7 @@ public class StringUtility
      * @param fieldName 属性名
      * @return getXxx
      */
-    public static String genGetter(String fieldName)
-    {
+    public static String genGetter(String fieldName) {
         return upperFirstAndAddPre(fieldName, "get");
     }
     
@@ -200,17 +183,13 @@ public class StringUtility
      * @param preLength 去掉的长度
      * @return 处理后的字符串，不符合规范返回null
      */
-    public static String cutPreAndLowerFirst(String str, int preLength)
-    {
-        if (str == null)
-        {
+    public static String cutPreAndLowerFirst(String str, int preLength) {
+        if (str == null) {
             return null;
         }
-        if (str.length() > preLength)
-        {
+        if (str.length() > preLength) {
             char first = Character.toLowerCase(str.charAt(preLength));
-            if (str.length() > preLength + 1)
-            {
+            if (str.length() > preLength + 1) {
                 return first + str.substring(preLength + 1);
             }
             return String.valueOf(first);
@@ -225,10 +204,8 @@ public class StringUtility
      * @param preString 添加的首部
      * @return 处理后的字符串
      */
-    public static String upperFirstAndAddPre(String str, String preString)
-    {
-        if (str == null || preString == null)
-        {
+    public static String upperFirstAndAddPre(String str, String preString) {
+        if (str == null || preString == null) {
             return null;
         }
         return preString + upperFirst(str);
@@ -241,8 +218,7 @@ public class StringUtility
      * @param str 字符串
      * @return 字符串
      */
-    public static String upperFirst(String str)
-    {
+    public static String upperFirst(String str) {
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
     
@@ -253,8 +229,7 @@ public class StringUtility
      * @param str 字符串
      * @return 字符串
      */
-    public static String lowerFirst(String str)
-    {
+    public static String lowerFirst(String str) {
         return Character.toLowerCase(str.charAt(0)) + str.substring(1);
     }
     
@@ -265,10 +240,8 @@ public class StringUtility
      * @param prefix 前缀
      * @return 切掉后的字符串，若前缀不是 preffix， 返回原字符串
      */
-    public static String removePrefix(String str, String prefix)
-    {
-        if (str != null && str.startsWith(prefix))
-        {
+    public static String removePrefix(String str, String prefix) {
+        if (str != null && str.startsWith(prefix)) {
             return str.substring(prefix.length());
         }
         return str;
@@ -281,10 +254,8 @@ public class StringUtility
      * @param prefix 前缀
      * @return 切掉后的字符串，若前缀不是 prefix， 返回原字符串
      */
-    public static String removePrefixIgnoreCase(String str, String prefix)
-    {
-        if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase()))
-        {
+    public static String removePrefixIgnoreCase(String str, String prefix) {
+        if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase())) {
             return str.substring(prefix.length());
         }
         return str;
@@ -297,10 +268,8 @@ public class StringUtility
      * @param suffix 后缀
      * @return 切掉后的字符串，若后缀不是 suffix， 返回原字符串
      */
-    public static String removeSuffix(String str, String suffix)
-    {
-        if (str != null && str.endsWith(suffix))
-        {
+    public static String removeSuffix(String str, String suffix) {
+        if (str != null && str.endsWith(suffix)) {
             return str.substring(0, str.length() - suffix.length());
         }
         return str;
@@ -313,10 +282,8 @@ public class StringUtility
      * @param suffix 后缀
      * @return 切掉后的字符串，若后缀不是 suffix， 返回原字符串
      */
-    public static String removeSuffixIgnoreCase(String str, String suffix)
-    {
-        if (str != null && str.toLowerCase().endsWith(suffix.toLowerCase()))
-        {
+    public static String removeSuffixIgnoreCase(String str, String suffix) {
+        if (str != null && str.toLowerCase().endsWith(suffix.toLowerCase())) {
             return str.substring(0, str.length() - suffix.length());
         }
         return str;
@@ -328,10 +295,8 @@ public class StringUtility
      * @param str 被清理的字符串
      * @return 清理后的字符串
      */
-    public static String cleanBlank(String str)
-    {
-        if (str == null)
-        {
+    public static String cleanBlank(String str) {
+        if (str == null) {
             return null;
         }
         
@@ -346,8 +311,7 @@ public class StringUtility
      * @param separator 分隔符字符
      * @return 切分后的集合
      */
-    public static List<String> split(String str, char separator)
-    {
+    public static List<String> split(String str, char separator) {
         return split(str, separator, 0);
     }
     
@@ -359,15 +323,12 @@ public class StringUtility
      * @param limit     限制分片数
      * @return 切分后的集合
      */
-    public static List<String> split(String str, char separator, int limit)
-    {
-        if (str == null)
-        {
+    public static List<String> split(String str, char separator, int limit) {
+        if (str == null) {
             return null;
         }
         List<String> list = new ArrayList<>(limit == 0 ? 16 : limit);
-        if (limit == 1)
-        {
+        if (limit == 1) {
             list.add(str);
             return list;
         }
@@ -376,11 +337,9 @@ public class StringUtility
         
         int strLen = str.length();
         StringBuilder sb = new StringBuilder(strLen);
-        for (int i = 0; i < strLen; i++)
-        {
+        for (int i = 0; i < strLen; i++) {
             char c = str.charAt(i);
-            if (isNotEnd && c == separator)
-            {
+            if (isNotEnd && c == separator) {
                 list.add(sb.toString());
                 // 清空StringBuilder
                 
@@ -388,13 +347,11 @@ public class StringUtility
                 
                 // 当达到切分上限-1的量时，将所剩字符全部作为最后一个串
                 
-                if (limit != 0 && list.size() == limit - 1)
-                {
+                if (limit != 0 && list.size() == limit - 1) {
                     isNotEnd = false;
                 }
             }
-            else
-            {
+            else {
                 sb.append(c);
             }
         }
@@ -410,14 +367,11 @@ public class StringUtility
      * @param delimiter 分隔符
      * @return 字符串
      */
-    public static String[] split(String str, String delimiter)
-    {
-        if (str == null)
-        {
+    public static String[] split(String str, String delimiter) {
+        if (str == null) {
             return null;
         }
-        if (str.trim().length() == 0)
-        {
+        if (str.trim().length() == 0) {
             return new String[] {str};
         }
         
@@ -431,8 +385,7 @@ public class StringUtility
         int j = 0;
         int count = 0;
         positions[0] = -dellen;
-        while ((i = str.indexOf(delimiter, j)) != -1)
-        {
+        while ((i = str.indexOf(delimiter, j)) != -1) {
             count++;
             positions[count] = i;
             j = i + dellen;
@@ -442,8 +395,7 @@ public class StringUtility
         
         String[] result = new String[count];
         
-        for (i = 0; i < count; i++)
-        {
+        for (i = 0; i < count; i++) {
             result[i] = str.substring(positions[i] + dellen, positions[i + 1]);
         }
         return result;
@@ -459,34 +411,28 @@ public class StringUtility
      * @param toIndex   结束的index（不包括）
      * @return 字串
      */
-    public static String sub(String string, int fromIndex, int toIndex)
-    {
+    public static String sub(String string, int fromIndex, int toIndex) {
         int len = string.length();
         
-        if (fromIndex < 0)
-        {
+        if (fromIndex < 0) {
             fromIndex = len + fromIndex;
             
-            if (toIndex == 0)
-            {
+            if (toIndex == 0) {
                 toIndex = len;
             }
         }
         
-        if (toIndex < 0)
-        {
+        if (toIndex < 0) {
             toIndex = len + toIndex;
         }
         
-        if (toIndex < fromIndex)
-        {
+        if (toIndex < fromIndex) {
             int tmp = fromIndex;
             fromIndex = toIndex;
             toIndex = tmp;
         }
         
-        if (fromIndex == toIndex)
-        {
+        if (fromIndex == toIndex) {
             return CharacterConstant.EMPTY;
         }
         
@@ -502,8 +448,7 @@ public class StringUtility
      * @param toIndex 切割到的位置（不包括）
      * @return 切割后的字符串
      */
-    public static String subPre(String string, int toIndex)
-    {
+    public static String subPre(String string, int toIndex) {
         return sub(string, 0, toIndex);
     }
     
@@ -514,10 +459,8 @@ public class StringUtility
      * @param fromIndex 切割开始的位置（包括）
      * @return 切割后的字符串
      */
-    public static String subSuf(String string, int fromIndex)
-    {
-        if (isEmpty(string))
-        {
+    public static String subSuf(String string, int fromIndex) {
+        if (isEmpty(string)) {
             return null;
         }
         return sub(string, fromIndex, string.length());
@@ -530,11 +473,9 @@ public class StringUtility
      * @param count 重复的数目
      * @return 重复字符字符串
      */
-    public static String repeat(char c, int count)
-    {
+    public static String repeat(char c, int count) {
         char[] result = new char[count];
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             result[i] = c;
         }
         return new String(result);
@@ -547,24 +488,21 @@ public class StringUtility
      * @param count 重复的数目
      * @return 重复字符字符串
      */
-    public static String repeat(String str, int count)
-    {
+    public static String repeat(String str, int count) {
         
         // 检查
         
         final int len = str.length();
         final long longSize = (long)len * (long)count;
         final int size = (int)longSize;
-        if (size != longSize)
-        {
+        if (size != longSize) {
             throw new ArrayIndexOutOfBoundsException("Required String length is too large: " + longSize);
         }
         
         final char[] array = new char[size];
         str.getChars(0, len, array, 0);
         int n;
-        for (n = len; n < size - n; n <<= 1)
-        {//n <<= 1相当于n *2
+        for (n = len; n < size - n; n <<= 1) {//n <<= 1相当于n *2
             
             System.arraycopy(array, 0, array, n, n);
         }
@@ -579,10 +517,8 @@ public class StringUtility
      * @param str2 字符串2
      * @return 是否非空相同
      */
-    public static boolean equalsNotEmpty(String str1, String str2)
-    {
-        if (isEmpty(str1))
-        {
+    public static boolean equalsNotEmpty(String str1, String str2) {
+        if (isEmpty(str1)) {
             return false;
         }
         return str1.equals(str2);
@@ -595,10 +531,8 @@ public class StringUtility
      * @param values   参数值
      * @return 格式化后的文本
      */
-    public static String format(String template, Object... values)
-    {
-        if (CollectionUtility.isEmpty(values) || isBlank(template))
-        {
+    public static String format(String template, Object... values) {
+        if (CollectionUtility.isEmpty(values) || isBlank(template)) {
             return template;
         }
         
@@ -607,29 +541,23 @@ public class StringUtility
         
         int valueIndex = 0;
         char currentChar;
-        for (int i = 0; i < length; i++)
-        {
-            if (valueIndex >= values.length)
-            {
+        for (int i = 0; i < length; i++) {
+            if (valueIndex >= values.length) {
                 sb.append(sub(template, i, length));
                 break;
             }
             
             currentChar = template.charAt(i);
-            if (currentChar == '{')
-            {
+            if (currentChar == '{') {
                 final char nextChar = template.charAt(++i);
-                if (nextChar == '}')
-                {
+                if (nextChar == '}') {
                     sb.append(values[valueIndex++]);
                 }
-                else
-                {
+                else {
                     sb.append('{').append(nextChar);
                 }
             }
-            else
-            {
+            else {
                 sb.append(currentChar);
             }
             
@@ -645,10 +573,8 @@ public class StringUtility
      * @param values   参数值
      * @return 格式化后的文本
      */
-    public static String format(String template, List<String> values)
-    {
-        if (CollectionUtility.isEmpty(values) || isBlank(template))
-        {
+    public static String format(String template, List<String> values) {
+        if (CollectionUtility.isEmpty(values) || isBlank(template)) {
             return template;
         }
         
@@ -657,29 +583,23 @@ public class StringUtility
         
         int valueIndex = 0;
         char currentChar;
-        for (int i = 0; i < length; i++)
-        {
-            if (valueIndex >= values.size())
-            {
+        for (int i = 0; i < length; i++) {
+            if (valueIndex >= values.size()) {
                 sb.append(sub(template, i, length));
                 break;
             }
             
             currentChar = template.charAt(i);
-            if (currentChar == '{')
-            {
+            if (currentChar == '{') {
                 final char nextChar = template.charAt(++i);
-                if (nextChar == '}')
-                {
+                if (nextChar == '}') {
                     sb.append(values.get(valueIndex++));
                 }
-                else
-                {
+                else {
                     sb.append('{').append(nextChar);
                 }
             }
-            else
-            {
+            else {
                 sb.append(currentChar);
             }
             
@@ -695,15 +615,12 @@ public class StringUtility
      * @param map      参数值对
      * @return 格式化后的文本
      */
-    public static String format(String template, Map<?, ?> map)
-    {
-        if (null == map || map.isEmpty())
-        {
+    public static String format(String template, Map<?, ?> map) {
+        if (null == map || map.isEmpty()) {
             return template;
         }
         
-        for (Map.Entry<?, ?> entry : map.entrySet())
-        {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
             template = template.replace("{" + entry.getKey() + "}", entry.getValue().toString());
         }
         return template;
@@ -716,19 +633,15 @@ public class StringUtility
      * @param charset 字符集
      * @return 编码后的字节码
      */
-    public static byte[] encode(String str, String charset)
-    {
-        if (str == null)
-        {
+    public static byte[] encode(String str, String charset) {
+        if (str == null) {
             return null;
         }
         
-        try
-        {
+        try {
             return str.getBytes(charset);
         }
-        catch (UnsupportedEncodingException e)
-        {
+        catch (UnsupportedEncodingException e) {
             LoggerManager.error(StringUtility.class, e, format("encode error, Charset [{}] unsupported!", charset));
             throw new InfrastructureException(e, format("Charset [{}] unsupported!", charset));
         }
@@ -741,19 +654,15 @@ public class StringUtility
      * @param charset 字符集
      * @return 解码后的字符串
      */
-    public static String decode(byte[] data, String charset)
-    {
-        if (data == null)
-        {
+    public static String decode(byte[] data, String charset) {
+        if (data == null) {
             return null;
         }
         
-        try
-        {
+        try {
             return new String(data, charset);
         }
-        catch (UnsupportedEncodingException e)
-        {
+        catch (UnsupportedEncodingException e) {
             LoggerManager.error(StringUtility.class, e, format("decode error, Charset [{}] unsupported!", charset));
             throw new InfrastructureException(e, format("Charset [{}] unsupported!", charset));
         }
@@ -766,11 +675,9 @@ public class StringUtility
      * @param objs 对象数组
      * @return 字符串
      */
-    public static String str(Object... objs)
-    {
+    public static String str(Object... objs) {
         StringBuilder sb = new StringBuilder();
-        for (Object obj : objs)
-        {
+        for (Object obj : objs) {
             sb.append(obj);
         }
         return sb.toString();
@@ -783,8 +690,7 @@ public class StringUtility
      * @param charset 字符集
      * @return 字符串
      */
-    public static String str(byte[] bytes, String charset)
-    {
+    public static String str(byte[] bytes, String charset) {
         return new String(bytes, Charset.forName(charset));
     }
     
@@ -794,10 +700,8 @@ public class StringUtility
      * @param camelCaseStr 转换前的驼峰式命名的字符串
      * @return 转换后下划线大写方式命名的字符串
      */
-    public static String toUnderlineCase(String camelCaseStr)
-    {
-        if (camelCaseStr == null)
-        {
+    public static String toUnderlineCase(String camelCaseStr) {
+        if (camelCaseStr == null) {
             return null;
         }
         
@@ -805,27 +709,21 @@ public class StringUtility
         StringBuilder sb = new StringBuilder();
         char c;
         boolean isPreUpperCase = false;
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             c = camelCaseStr.charAt(i);
             boolean isNextUpperCase = true;
-            if (i < (length - 1))
-            {
+            if (i < (length - 1)) {
                 isNextUpperCase = Character.isUpperCase(camelCaseStr.charAt(i + 1));
             }
-            if (Character.isUpperCase(c))
-            {
-                if (!isPreUpperCase || !isNextUpperCase)
-                {
-                    if (i > 0)
-                    {
+            if (Character.isUpperCase(c)) {
+                if (!isPreUpperCase || !isNextUpperCase) {
+                    if (i > 0) {
                         sb.append(CharacterConstant.UNDERLINE);
                     }
                 }
                 isPreUpperCase = true;
             }
-            else
-            {
+            else {
                 isPreUpperCase = false;
             }
             sb.append(Character.toLowerCase(c));
@@ -839,33 +737,26 @@ public class StringUtility
      * @param name 转换前的下划线大写方式命名的字符串
      * @return 转换后的驼峰式命名的字符串
      */
-    public static String toCamelCase(String name)
-    {
-        if (name == null)
-        {
+    public static String toCamelCase(String name) {
+        if (name == null) {
             return null;
         }
-        if (name.contains(CharacterConstant.UNDERLINE))
-        {
+        if (name.contains(CharacterConstant.UNDERLINE)) {
             name = name.toLowerCase();
             
             StringBuilder sb = new StringBuilder(name.length());
             boolean upperCase = false;
-            for (int i = 0; i < name.length(); i++)
-            {
+            for (int i = 0; i < name.length(); i++) {
                 char c = name.charAt(i);
                 
-                if (c == '_')
-                {
+                if (c == '_') {
                     upperCase = true;
                 }
-                else if (upperCase)
-                {
+                else if (upperCase) {
                     sb.append(Character.toUpperCase(c));
                     upperCase = false;
                 }
-                else
-                {
+                else {
                     sb.append(c);
                 }
             }
@@ -883,8 +774,7 @@ public class StringUtility
      * @param suffix 后缀
      * @return 包装后的字符串
      */
-    public static String wrap(String str, String prefix, String suffix)
-    {
+    public static String wrap(String str, String prefix, String suffix) {
         return format("{}{}{}", prefix, str, suffix);
     }
     
@@ -896,8 +786,7 @@ public class StringUtility
      * @param suffix 后缀
      * @return 是否被包装
      */
-    public static boolean isWrap(String str, String prefix, String suffix)
-    {
+    public static boolean isWrap(String str, String prefix, String suffix) {
         return str.startsWith(prefix) && str.endsWith(suffix);
     }
     
@@ -908,8 +797,7 @@ public class StringUtility
      * @param wrapper 包装字符串
      * @return 是否被包装
      */
-    public static boolean isWrap(String str, String wrapper)
-    {
+    public static boolean isWrap(String str, String wrapper) {
         return isWrap(str, wrapper, wrapper);
     }
     
@@ -920,8 +808,7 @@ public class StringUtility
      * @param wrapper 包装字符
      * @return 是否被包装
      */
-    public static boolean isWrap(String str, char wrapper)
-    {
+    public static boolean isWrap(String str, char wrapper) {
         return isWrap(str, wrapper, wrapper);
     }
     
@@ -933,8 +820,7 @@ public class StringUtility
      * @param suffixChar 后缀
      * @return 是否被包装
      */
-    public static boolean isWrap(String str, char prefixChar, char suffixChar)
-    {
+    public static boolean isWrap(String str, char prefixChar, char suffixChar) {
         return str.charAt(0) == prefixChar && str.charAt(str.length() - 1) == suffixChar;
     }
     
@@ -946,15 +832,12 @@ public class StringUtility
      * @param padChar   补充的字符
      * @return 补充后的字符串
      */
-    public static String padPre(String str, int minLength, char padChar)
-    {
-        if (str.length() >= minLength)
-        {
+    public static String padPre(String str, int minLength, char padChar) {
+        if (str.length() >= minLength) {
             return str;
         }
         StringBuilder sb = new StringBuilder(minLength);
-        for (int i = str.length(); i < minLength; i++)
-        {
+        for (int i = str.length(); i < minLength; i++) {
             sb.append(padChar);
         }
         sb.append(str);
@@ -969,16 +852,13 @@ public class StringUtility
      * @param padChar   补充的字符
      * @return 补充后的字符串
      */
-    public static String padEnd(String str, int minLength, char padChar)
-    {
-        if (str.length() >= minLength)
-        {
+    public static String padEnd(String str, int minLength, char padChar) {
+        if (str.length() >= minLength) {
             return str;
         }
         StringBuilder sb = new StringBuilder(minLength);
         sb.append(str);
-        for (int i = str.length(); i < minLength; i++)
-        {
+        for (int i = str.length(); i < minLength; i++) {
             sb.append(padChar);
         }
         return sb.toString();
@@ -989,8 +869,7 @@ public class StringUtility
      *
      * @return StringBuilder对象
      */
-    public static StringBuilder builder()
-    {
+    public static StringBuilder builder() {
         return new StringBuilder();
     }
     
@@ -999,8 +878,7 @@ public class StringUtility
      *
      * @return StringBuilder对象
      */
-    public static StringBuilder builder(int capacity)
-    {
+    public static StringBuilder builder(int capacity) {
         return new StringBuilder(capacity);
     }
     
@@ -1009,11 +887,9 @@ public class StringUtility
      *
      * @return StringBuilder对象
      */
-    public static StringBuilder builder(String... strs)
-    {
+    public static StringBuilder builder(String... strs) {
         final StringBuilder sb = new StringBuilder();
-        for (String str : strs)
-        {
+        for (String str : strs) {
             sb.append(str);
         }
         return sb;
@@ -1026,14 +902,11 @@ public class StringUtility
      * @param charset 字符集编码
      * @return byte数组
      */
-    public static byte[] bytes(String str, String charset)
-    {
-        if (null == str)
-        {
+    public static byte[] bytes(String str, String charset) {
+        if (null == str) {
             return null;
         }
-        if (isBlank(charset))
-        {
+        if (isBlank(charset)) {
             return null;
         }
         return str.getBytes(Charset.forName(charset));
@@ -1045,8 +918,7 @@ public class StringUtility
      * @param input
      * @return
      */
-    public static boolean isInteger(String input)
-    {
+    public static boolean isInteger(String input) {
         Matcher mer = Pattern.compile("^[+-]?[0-9]+$").matcher(input);
         return mer.find();
     }
@@ -1057,11 +929,9 @@ public class StringUtility
      * @param str string类型的数组
      * @return
      */
-    public static Integer[] stringToIntegerArray(String[] str)
-    {
+    public static Integer[] stringToIntegerArray(String[] str) {
         Integer array[] = new Integer[str.length];
-        for (int i = 0; i < str.length; i++)
-        {
+        for (int i = 0; i < str.length; i++) {
             array[i] = Integer.parseInt(str[i]);
         }
         return array;
@@ -1073,8 +943,7 @@ public class StringUtility
      * @param src 文件路径/名称	文件路径   C:\Users\Public\Pictures\Sample Pictures\test.jpg
      * @return 如果文件后缀        jpg
      */
-    public static String getFileExt(String src)
-    {
+    public static String getFileExt(String src) {
         
         String filename = src.substring(src.lastIndexOf(File.separator) + 1, src.length());//获取到文件名
         
@@ -1087,8 +956,7 @@ public class StringUtility
      * @param src 文件路径   C:\Users\Public\Pictures\Sample Pictures\test.jpg
      * @return 文件名称 不带文件后缀   	test
      */
-    public static String getFileName(String src)
-    {
+    public static String getFileName(String src) {
         
         String filename = src.substring(src.lastIndexOf(File.separator) + 1, src.length());//获取到文件名
         
@@ -1100,10 +968,8 @@ public class StringUtility
      * @param str 待判断的字符
      * @return 是否是中文字符
      */
-    public static boolean isChineseChar(String str)
-    {
-        if (isEmpty(str))
-        {
+    public static boolean isChineseChar(String str) {
+        if (isEmpty(str)) {
             return false;
         }
         Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
@@ -1118,8 +984,7 @@ public class StringUtility
      * @return
      * @see [类、类#方法、类#成员]
      */
-    public static boolean isLetter(char c)
-    {
+    public static boolean isLetter(char c) {
         int k = 0x80;
         return c / k == 0 ? true : false;
     }
@@ -1129,19 +994,15 @@ public class StringUtility
      * @param String s 需要得到长度的字符串  
      * @return int 得到的字符串长度  
      */
-    public static int length(String s)
-    {
-        if (s == null)
-        {
+    public static int length(String s) {
+        if (s == null) {
             return 0;
         }
         char[] c = s.toCharArray();
         int len = 0;
-        for (int i = 0; i < c.length; i++)
-        {
+        for (int i = 0; i < c.length; i++) {
             len++;
-            if (!isLetter(c[i]))
-            {
+            if (!isLetter(c[i])) {
                 len++;
             }
         }
