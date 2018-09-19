@@ -2,6 +2,7 @@ package com.tenkent.infrastructure.base;
 
 /**
  * 返回controller数据封装
+ * 
  * @author  zhangjiaping
  * @version  [版本号, 2018年9月19日]
  */

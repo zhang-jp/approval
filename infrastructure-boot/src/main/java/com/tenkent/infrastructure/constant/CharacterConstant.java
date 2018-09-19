@@ -2,6 +2,7 @@ package com.tenkent.infrastructure.constant;
 
 /**
  * 符号常量
+ * 
  * @author  zhangjiaping
  * @version  [版本号, 2018年9月19日]
  */

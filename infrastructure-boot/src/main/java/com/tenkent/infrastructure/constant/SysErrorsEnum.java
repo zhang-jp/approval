@@ -2,6 +2,7 @@ package com.tenkent.infrastructure.constant;
 
 /**
  * 系统错误码信息
+ * 
  * @author  zhangjiaping
  * @version  [版本号, 2018年9月19日]
  */
